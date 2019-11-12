@@ -1,0 +1,31 @@
+.imageselectionfield-toolbar {
+  background-color: #e9f0f4;
+  border-top: 1px solid #ced5e1;
+  border-left: 1px solid #ced5e1;
+  border-right: 1px solid #ced5e1;
+}
+
+.imageselectionfield-toolbar > span {
+  display: none;
+  cursor: pointer;
+  width: 60px;
+  height: 50px;
+  padding: 16px 18px;
+  text-align: center;
+}
+
+.imageselectionfield-toolbar > span.tool-on {
+  display: inline-block;
+}
+
+.imageselectionfield-toolbar > span svg {
+  fill: #5589a7;
+}
+
+.imageselectionfield-toolbar > span:hover {
+  background-color: #d8e4eb;
+}
+
+.imageselectionfield-toolbar > span.active {
+  background-color: #d8e4eb;
+}

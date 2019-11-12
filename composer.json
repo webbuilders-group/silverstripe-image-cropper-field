@@ -1,0 +1,34 @@
+{
+    "name": "webbuilders-group/silverstripe-image-crop-field",
+    "description": "Adds a new field to images to allow them to be cropped. This will give the ability to save as new or overwrite current image.",
+    "type": "silverstripe-vendormodule",
+    "keywords": ["silverstripe", "imagecrop", "image", "crop"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "DoggersHusky",
+            "homepage": "https://webbuildersgroup.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "~4.4"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        },
+        "expose": [
+            "css",
+            "javascript"
+        ]
+    },
+    "support": {
+        "issues": "https://github.com/webbuilders-group/silverstripe-frontendgridfield/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebbuildersGroup\\ImageCropField\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+---
+Name: imagecropfield
+After:
+  - "assetsimage"
+---
+SilverStripe\AssetAdmin\Forms\ImageFormFactory:
+  extensions:
+    - WebbuildersGroup\ImageCropField\Extensions\ImageCropFieldAssetFormFactoryExtension
