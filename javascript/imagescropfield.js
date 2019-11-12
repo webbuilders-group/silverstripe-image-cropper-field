@@ -8,8 +8,8 @@
         //get the proper edit form so we can have multiple image selection fields
         let targetname = "#Form_EditForm_" + target.data("targetname");
         //get the olddata for the cropboxdata used in the ready function
-        let data = $(targetname + " .fields input:nth-child(1)").val();
-        data = data.split(",");
+        // let data = $(targetname + " .fields input:nth-child(1)").val();
+        // data = data.split(",");
 
         target.cropper({
           //zoomable: false,
@@ -42,21 +42,20 @@
             changed = true;
           },
           ready: function() {
-            //set the start position of the cropper
-            target.cropper("setData", {
-              x: parseFloat(data[4]),
-              y: parseFloat(data[5]),
-              width: parseFloat(data[6]),
-              height: parseFloat(data[7]),
-            });
-
-            //not changed
-            changed = false;
-          },
+            // //set the start position of the cropper
+            // target.cropper("setData", {
+            //   x: parseFloat(data[4]),
+            //   y: parseFloat(data[5]),
+            //   width: parseFloat(data[6]),
+            //   height: parseFloat(data[7]),
+            // });
+            // //not changed
+            // changed = false;
+          }
         });
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-move-tool").entwine({
@@ -81,7 +80,7 @@
         $(this).addClass("active");
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-selection-tool").entwine({
@@ -106,7 +105,7 @@
         $(this).addClass("active");
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-zoomin-tool").entwine({
@@ -120,7 +119,7 @@
         target.cropper("zoom", "0.1");
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-zoomout-tool").entwine({
@@ -134,7 +133,7 @@
         target.cropper("zoom", "-0.1");
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-reset-tool").entwine({
@@ -148,7 +147,7 @@
         target.cropper("reset");
 
         this._super();
-      },
+      }
     });
 
     $(".imageselectionfield-savecropped-tool").entwine({
@@ -170,7 +169,7 @@
               "It is reccomended you save before attempting to create the cropped image."
             );
         }
-      },
+      }
     });
   });
 })(jQuery);
