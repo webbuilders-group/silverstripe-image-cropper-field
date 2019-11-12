@@ -3,11 +3,8 @@
 namespace WebbuildersGroup\ImageCropField\Forms;
 
 use SilverStripe\Assets\Image;
-use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormField;
-use SilverStripe\Forms\HiddenField;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\DataObjectInterface;
 
 /**
  * An Image Selection Field that allows the user to select a section of the image
@@ -33,21 +30,16 @@ class ImageCropField extends FormField
     /**
      * @param DataObject $data The parent dataobject
      * @param string $title The title of the field
-     * @param string $imageData the form field to save the data too
      * @param Image the image we will be manipulating
      */
-    public function __construct($data, $title, $imageData, $image)
+    public function __construct($data, $title, $image)
     {
         //used for saving back to the parent object and referencing db fields
         $this->data = [
             'data' => $data,
             'title' => $title,
-            'imageData' => $imageData,
             'image' => $image,
         ];
-
-        // Set up fieldnames
-        $this->setupChildren();
 
         parent::__construct($this->getName(), $title);
     }
@@ -62,40 +54,6 @@ class ImageCropField extends FormField
     }
 
     /**
-     * Set up child hidden fields
-     * @return FieldList the children
-     */
-    public function setupChildren()
-    {
-        $name = $this->getName();
-
-        // Create the latitude/longitude hidden fields
-        $this->imageDataField = HiddenField::create(
-            $name . '[imageData]',
-            'imageData',
-            $this->data["data"]->{$this->data["imageData"]}
-        );
-
-        $this->children = new FieldList(
-            $this->imageDataField
-        );
-
-        return $this->children;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setValue($record, $data = null)
-    {
-        $this->imageDataField->setValue(
-            $record["imageData"]
-        );
-
-        return $this;
-    }
-
-    /**
      * All cropping to be done on this image
      *
      * @return void
@@ -103,25 +61,6 @@ class ImageCropField extends FormField
     public function setEnabledCrop()
     {
         $this->enable_crop = true;
-    }
-
-    /**
-     * Take the fields and saves them to the DataObject.
-     * {@inheritdoc}
-     */
-    public function saveInto(DataObjectInterface $record)
-    {
-        $record->setCastedField($this->data["imageData"], $this->imageDataField->dataValue());
-
-        return $this;
-    }
-
-    /**
-     * @return FieldList
-     */
-    public function getChildFields()
-    {
-        return $this->children;
     }
 
     /**

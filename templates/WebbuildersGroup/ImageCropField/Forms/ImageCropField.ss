@@ -1,16 +1,12 @@
-<% require javascript(app/js/cropper.min.js) %>
-<% require css(app/css/cropper.min.css) %>
-<% require javascript(app/js/jquery-cropper.min.js) %>
-<% require javascript(app/js/imagescropfield.js) %>
-<% require css(app/css/imageselectionfield.css) %>
+<% require javascript(webbuilders-group/silverstripe-image-crop-field: javascript/cropper.min.js) %>
+<% require css(webbuilders-group/silverstripe-image-crop-field: css/cropper.min.css) %>
+<% require javascript(webbuilders-group/silverstripe-image-crop-field: javascript/jquery-cropper.min.js) %>
+<% require javascript(webbuilders-group/silverstripe-image-crop-field: javascript/imagescropfield.js) %>
+<% require css(webbuilders-group/silverstripe-image-crop-field: css/imagescropfield.css) %>
 
 
 <div class="imageselectionfield $extraClass" $AttributesHTML>
-	<div class="fields">
-		<% loop $ChildFields %>
-			$Field
-		<% end_loop %>
-	</div>
+	test
 	<div class="imageselectionfield-toolbar" data-targetname="$Name" style="width: 800px;">
 		<span class="imageselectionfield-move-tool tool-on">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M12 10c1.104 0 2 .896 2 2s-.896 2-2 2-2-.896-2-2 .896-2 2-2zm-3.857 3c-.084-.321-.143-.652-.143-1s.059-.679.143-1h-2.143v-4l-6 5 6 5v-4h2.143zm7.714-2c.084.321.143.652.143 1s-.059.679-.143 1h2.143v4l6-5-6-5v4h-2.143zm-2.857 4.857c-.321.084-.652.143-1 .143s-.679-.059-1-.143v2.143h-4l5 6 5-6h-4v-2.143zm-2-7.714c.321-.084.652-.143 1-.143s.679.059 1 .143v-2.143h4l-5-6-5 6h4v2.143z"/></svg>

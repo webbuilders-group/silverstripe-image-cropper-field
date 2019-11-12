@@ -14,7 +14,7 @@ class ImageCropFieldAssetFormFactoryExtension extends Extension
         if ($image && $image->appCategory() === 'image') {
             $fields->insertAfter(
                 'Title',
-                ImageCropField::create($this->owner, 'crop', 'test', $image)
+                ImageCropField::create($this->owner, 'crop', $image)
             );
         }
     }
