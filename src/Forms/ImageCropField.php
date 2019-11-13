@@ -27,6 +27,10 @@ class ImageCropField extends FormField
 
     protected $imageDataField;
 
+    // protected $schemaDataType = FormField::SCHEMA_DATA_TYPE_CUSTOM;
+
+    // protected $schemaComponent = 'ImageCropField';
+
     /**
      * @param DataObject $data The parent dataobject
      * @param string $title The title of the field
