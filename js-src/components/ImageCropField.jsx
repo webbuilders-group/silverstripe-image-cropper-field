@@ -17,8 +17,8 @@ class ImageCropField extends Component {
   render() {
     return (
       <div class="imagecrop-field">
-        <div class="imageselectionfield-toolbar">
-          <span class="imageselectionfield-move-tool tool-on">
+        <div class="imagecrop-field-toolbar">
+          <span class="imagecrop-field-move-tool tool-on">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -28,7 +28,7 @@ class ImageCropField extends Component {
               <path d="M12 10c1.104 0 2 .896 2 2s-.896 2-2 2-2-.896-2-2 .896-2 2-2zm-3.857 3c-.084-.321-.143-.652-.143-1s.059-.679.143-1h-2.143v-4l-6 5 6 5v-4h2.143zm7.714-2c.084.321.143.652.143 1s-.059.679-.143 1h2.143v4l6-5-6-5v4h-2.143zm-2.857 4.857c-.321.084-.652.143-1 .143s-.679-.059-1-.143v2.143h-4l5 6 5-6h-4v-2.143zm-2-7.714c.321-.084.652-.143 1-.143s.679.059 1 .143v-2.143h4l-5-6-5 6h4v2.143z" />
             </svg>
           </span>
-          <span class="imageselectionfield-selection-tool tool-on active">
+          <span class="imagecrop-field-selection-tool tool-on active">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -38,7 +38,7 @@ class ImageCropField extends Component {
               <path d="M20 18v-14h-14v-4h-2v4h-4v2h4v14h14v4h2v-4h4v-2h-4zm-2-9h-3v-3h3v3zm-8 5v-4h4v4h-4zm4 1v3h-4v-3h4zm-5-1h-3v-4h3v4zm1-5v-3h4v3h-4zm5 1h3v4h-3v-4zm-6-4v3h-3v-3h3zm-3 9h3v3h-3v-3zm9 3v-3h3v3h-3z" />
             </svg>
           </span>
-          <span class="imageselectionfield-zoomin-tool tool-on">
+          <span class="imagecrop-field-zoomin-tool tool-on">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -48,7 +48,7 @@ class ImageCropField extends Component {
               <path d="M13 10h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2zm8.172 14l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
             </svg>
           </span>
-          <span class="imageselectionfield-zoomout-tool tool-on">
+          <span class="imagecrop-field-zoomout-tool tool-on">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -58,7 +58,7 @@ class ImageCropField extends Component {
               <path d="M13 10h-8v-2h8v2zm8.172 14l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
             </svg>
           </span>
-          <span class="imageselectionfield-reset-tool tool-on">
+          <span class="imagecrop-field-reset-tool tool-on">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -69,7 +69,7 @@ class ImageCropField extends Component {
             </svg>
           </span>
           <span
-            class="imageselectionfield-savecropped-tool tool-on"
+            class="imagecrop-field-savecropped-tool tool-on"
             alt="Create cropped image"
           >
             <svg
@@ -108,7 +108,7 @@ jQuery.entwine("lenovo", function($) {
     },
   });
   //handle the move tool
-  $(".imageselectionfield-move-tool").entwine({
+  $(".imagecrop-field-move-tool").entwine({
     onclick: function(e) {
       //get the proper edit form so we can have multiple image selection fields
       let target = this.parent()
@@ -122,7 +122,7 @@ jQuery.entwine("lenovo", function($) {
       $(this)
         .parent()
         .parent()
-        .find(".imageselectionfield-toolbar > span")
+        .find(".imagecrop-field-toolbar > span")
         .each(function() {
           $(this).removeClass("active");
         });
@@ -133,7 +133,7 @@ jQuery.entwine("lenovo", function($) {
     },
   });
   //handle the selection tool
-  $(".imageselectionfield-selection-tool").entwine({
+  $(".imagecrop-field-selection-tool").entwine({
     onclick: function(e) {
       //get the proper edit form so we can have multiple image selection fields
       let target = this.parent()
@@ -147,7 +147,7 @@ jQuery.entwine("lenovo", function($) {
       $(this)
         .parent()
         .parent()
-        .find(".imageselectionfield-toolbar > span")
+        .find(".imagecrop-field-toolbar > span")
         .each(function() {
           $(this).removeClass("active");
         });
@@ -158,7 +158,7 @@ jQuery.entwine("lenovo", function($) {
     },
   });
   //handle zoom in tool
-  $(".imageselectionfield-zoomin-tool").entwine({
+  $(".imagecrop-field-zoomin-tool").entwine({
     onclick: function(e) {
       //get the proper edit form so we can have multiple image selection fields
       let target = this.parent()
@@ -172,15 +172,29 @@ jQuery.entwine("lenovo", function($) {
     },
   });
   //handle zoom out tool
-  $(".imageselectionfield-zoomout-tool").entwine({
+  $(".imagecrop-field-zoomout-tool").entwine({
     onclick: function(e) {
       //get the proper edit form so we can have multiple image selection fields
       let target = this.parent()
         .parent()
-        .find(".iimagecrop-field-selection");
+        .find(".imagecrop-field-selection");
 
       //toggle crop mode
       target.cropper("zoom", "-0.1");
+
+      $(this)._super();
+    },
+  });
+  //handle reset
+  $(".imagecrop-field-reset-tool").entwine({
+    onclick: function(e) {
+      //get the proper edit form so we can have multiple image selection fields
+      let target = this.parent()
+        .parent()
+        .find(".imagecrop-field-selection");
+
+      //toggle crop mode
+      target.cropper("reset");
 
       $(this)._super();
     },
