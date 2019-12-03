@@ -37,6 +37,12 @@ jQuery.entwine("lenovo", function($) {
 
       // $(this).attr("src", imageURL);
 
+      $(this).cropper({
+        responsive: false,
+        minContainerWidth: 500,
+        minContainerHeight: 500,
+      });
+
       console.log("jquery working");
     },
   });
