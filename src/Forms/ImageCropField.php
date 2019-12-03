@@ -27,9 +27,9 @@ class ImageCropField extends FormField
 
     protected $imageDataField;
 
-    // protected $schemaDataType = FormField::SCHEMA_DATA_TYPE_CUSTOM;
+    protected $schemaDataType = FormField::SCHEMA_DATA_TYPE_CUSTOM;
 
-    // protected $schemaComponent = 'ImageCropField';
+    protected $schemaComponent = 'ImageCropField';
 
     /**
      * @param DataObject $data The parent dataobject
@@ -75,6 +75,21 @@ class ImageCropField extends FormField
     public function getImage()
     {
         return $this->data["image"];
+    }
+
+    public function getSchemaStateDefaults()
+    {
+        $state = parent::getSchemaStateDefaults();
+
+        //check to see if there is an image and set the data
+        if ($this->data["image"]) {
+            //the image
+            $image = $this->data["image"]->ScaleWidth(500);
+            $state['data'] += [
+                'image' => $image->URL,
+            ];
+        }
+        return $state;
     }
 
     /**
