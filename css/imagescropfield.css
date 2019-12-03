@@ -29,3 +29,9 @@
 .imageselectionfield-toolbar > span.active {
   background-color: #d8e4eb;
 }
+
+@media (min-width: 1200px) {
+  .editor {
+    width: 600px !important;
+  }
+}
