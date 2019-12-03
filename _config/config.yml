@@ -8,5 +8,9 @@ SilverStripe\AssetAdmin\Forms\ImageFormFactory:
     - WebbuildersGroup\ImageCropField\Extensions\ImageCropFieldAssetFormFactoryExtension
 
 SilverStripe\Admin\LeftAndMain:
+  extra_requirements_css:
+    - "vendor/webbuilders-group/silverstripe-image-cropper-field/css/cropper.min.css"
   extra_requirements_javascript:
+    - "vendor/webbuilders-group/silverstripe-image-cropper-field/javascript/cropper.min.js"
+    - "vendor/webbuilders-group/silverstripe-image-cropper-field/javascript/jquery-cropper.min.js"
     - "vendor/webbuilders-group/silverstripe-image-cropper-field/javascript/boot/boot.js"
