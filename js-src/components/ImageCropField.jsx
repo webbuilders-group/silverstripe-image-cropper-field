@@ -3,6 +3,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Input } from "reactstrap";
+import MoveTool from "./MoveTool.jsx";
+import SelectionTool from "./SelectionTool.jsx";
+import ZoominTool from "./ZoominTool.jsx";
+import ZoomoutTool from "./ZoomoutTool.jsx";
 
 class ImageCropField extends Component {
   constructor(props) {
@@ -16,46 +20,10 @@ class ImageCropField extends Component {
     return (
       <div class="imagecrop-field" name={this.props.data.name}>
         <div class="imagecrop-field-toolbar">
-          <span class="imagecrop-field-move-tool tool-on">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 10c1.104 0 2 .896 2 2s-.896 2-2 2-2-.896-2-2 .896-2 2-2zm-3.857 3c-.084-.321-.143-.652-.143-1s.059-.679.143-1h-2.143v-4l-6 5 6 5v-4h2.143zm7.714-2c.084.321.143.652.143 1s-.059.679-.143 1h2.143v4l6-5-6-5v4h-2.143zm-2.857 4.857c-.321.084-.652.143-1 .143s-.679-.059-1-.143v2.143h-4l5 6 5-6h-4v-2.143zm-2-7.714c.321-.084.652-.143 1-.143s.679.059 1 .143v-2.143h4l-5-6-5 6h4v2.143z" />
-            </svg>
-          </span>
-          <span class="imagecrop-field-selection-tool tool-on active">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-            >
-              <path d="M20 18v-14h-14v-4h-2v4h-4v2h4v14h14v4h2v-4h4v-2h-4zm-2-9h-3v-3h3v3zm-8 5v-4h4v4h-4zm4 1v3h-4v-3h4zm-5-1h-3v-4h3v4zm1-5v-3h4v3h-4zm5 1h3v4h-3v-4zm-6-4v3h-3v-3h3zm-3 9h3v3h-3v-3zm9 3v-3h3v3h-3z" />
-            </svg>
-          </span>
-          <span class="imagecrop-field-zoomin-tool tool-on">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-            >
-              <path d="M13 10h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2zm8.172 14l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
-            </svg>
-          </span>
-          <span class="imagecrop-field-zoomout-tool tool-on">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-            >
-              <path d="M13 10h-8v-2h8v2zm8.172 14l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
-            </svg>
-          </span>
+          <MoveTool></MoveTool>
+          <SelectionTool></SelectionTool>
+          <ZoominTool></ZoominTool>
+          <ZoomoutTool></ZoomoutTool>
           <span class="imagecrop-field-reset-tool tool-on">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +60,7 @@ class ImageCropField extends Component {
 export default ImageCropField;
 
 // jquery to handle the image field
-jQuery.entwine("lenovo", function($) {
+jQuery.entwine("ImageCrop", function($) {
   //handle adding the field to the image
   $(".imagecrop-field-selection").entwine({
     onmatch: function() {
