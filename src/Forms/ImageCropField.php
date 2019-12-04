@@ -3,6 +3,7 @@
 namespace WebbuildersGroup\ImageCropField\Forms;
 
 use SilverStripe\Assets\Image;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\DataObject;
 
@@ -87,6 +88,7 @@ class ImageCropField extends FormField
             $image = $this->data["image"]->ScaleWidth(500);
             $state['data'] += [
                 'image' => $image->URL,
+                'name' => $this->getName(),
             ];
         }
         return $state;
@@ -109,16 +111,39 @@ class ImageCropField extends FormField
      */
     public function cropImage()
     {
-        //if cropping has not been turned on redirect back
-        if (!$this->getEnableCrop()) {
-            $this->getForm()->sessionMessage('Cropping is disabled for this field', 'bad');
+        if (Director::is_ajax()) {
+
+            //get the image
+            $data = $this->request->postVars();
+
+            //clean the image string
+            $img = str_replace('data:image/png;base64,', '', $data['image']);
+            $img = str_replace(' ', '+', $img);
+
+            //the actual image
+            $fileData = base64_decode($img);
+
+            $return = [
+                'status' => 'complete',
+            ];
+
+            //send back json
+            return json_encode($return);
+        } else {
+            //return as this shouldn't be hit otherwise
             return $this->redirectBack();
         }
 
-        //var_dump($this->getForm()->sessionMessage('test'));exit;
-        //var_dump($this->data["data"]->{$this->data["imageData"]});exit;
-        $this->getForm()->sessionMessage('Not implimented yet. Should lean on php for cropping.', 'warning');
+        //if cropping has not been turned on redirect back
+        // if (!$this->getEnableCrop()) {
+        //     $this->getForm()->sessionMessage('Cropping is disabled for this field', 'bad');
+        //     return $this->redirectBack();
+        // }
 
-        return $this->redirectBack();
+        // //var_dump($this->getForm()->sessionMessage('test'));exit;
+        // //var_dump($this->data["data"]->{$this->data["imageData"]});exit;
+        // $this->getForm()->sessionMessage('Not implimented yet. Should lean on php for cropping.', 'warning');
+
+        // return $this->redirectBack();
     }
 }
