@@ -19,3 +19,21 @@ class ZoominTool extends Component {
 }
 
 export default ZoominTool;
+
+// jquery to handle the image field
+jQuery.entwine("ImageCropZoominTool", function($) {
+  //handle zoom in tool
+  $(".imagecrop-field-zoomin-tool").entwine({
+    onclick: function(e) {
+      //get the proper edit form so we can have multiple image selection fields
+      let target = this.parent()
+        .parent()
+        .find(".imagecrop-field-selection");
+
+      //toggle crop mode
+      target.cropper("zoom", "0.1");
+
+      $(this)._super();
+    },
+  });
+});

@@ -60,7 +60,7 @@ class ImageCropField extends Component {
 export default ImageCropField;
 
 // jquery to handle the image field
-jQuery.entwine("ImageCrop", function($) {
+jQuery.entwine("ImageCropMain", function($) {
   //handle adding the field to the image
   $(".imagecrop-field-selection").entwine({
     onmatch: function() {
@@ -72,84 +72,7 @@ jQuery.entwine("ImageCrop", function($) {
       });
     },
   });
-  //handle the move tool
-  $(".imagecrop-field-move-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
 
-      //toggle move mode
-      target.cropper("setDragMode", "move");
-
-      //update the active icon
-      $(this)
-        .parent()
-        .parent()
-        .find(".imagecrop-field-toolbar > span")
-        .each(function() {
-          $(this).removeClass("active");
-        });
-
-      $(this).addClass("active");
-
-      $(this)._super();
-    },
-  });
-  //handle the selection tool
-  $(".imagecrop-field-selection-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle crop mode
-      target.cropper("setDragMode", "crop");
-
-      //update the active icon
-      $(this)
-        .parent()
-        .parent()
-        .find(".imagecrop-field-toolbar > span")
-        .each(function() {
-          $(this).removeClass("active");
-        });
-
-      $(this).addClass("active");
-
-      $(this)._super();
-    },
-  });
-  //handle zoom in tool
-  $(".imagecrop-field-zoomin-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle crop mode
-      target.cropper("zoom", "0.1");
-
-      $(this)._super();
-    },
-  });
-  //handle zoom out tool
-  $(".imagecrop-field-zoomout-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle crop mode
-      target.cropper("zoom", "-0.1");
-
-      $(this)._super();
-    },
-  });
   //handle reset
   $(".imagecrop-field-reset-tool").entwine({
     onclick: function(e) {

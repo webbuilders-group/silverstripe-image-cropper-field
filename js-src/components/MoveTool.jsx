@@ -19,3 +19,32 @@ class MoveTool extends Component {
 }
 
 export default MoveTool;
+
+// jquery to handle the image field
+jQuery.entwine("ImageCropMoveTool", function($) {
+  //handle the move tool
+  $(".imagecrop-field-move-tool").entwine({
+    onclick: function(e) {
+      //get the proper edit form so we can have multiple image selection fields
+      let target = this.parent()
+        .parent()
+        .find(".imagecrop-field-selection");
+
+      //toggle move mode
+      target.cropper("setDragMode", "move");
+
+      //update the active icon
+      $(this)
+        .parent()
+        .parent()
+        .find(".imagecrop-field-toolbar > span")
+        .each(function() {
+          $(this).removeClass("active");
+        });
+
+      $(this).addClass("active");
+
+      $(this)._super();
+    },
+  });
+});
