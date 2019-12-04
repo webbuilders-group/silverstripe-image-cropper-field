@@ -101,6 +101,7 @@ jQuery.entwine("lenovo", function($) {
         responsive: false,
         minContainerWidth: 542,
         minContainerHeight: 500,
+        scalable: true,
       });
     },
   });
@@ -218,7 +219,9 @@ jQuery.entwine("lenovo", function($) {
         type: "POST",
         url: url,
         data: {
-          image: target.cropper("getCroppedCanvas").toDataURL(),
+          image: target
+            .cropper("getCroppedCanvas", { maxWidth: 4096, maxHeight: 4096 })
+            .toDataURL(),
         },
         success: function(resultData) {
           //results
