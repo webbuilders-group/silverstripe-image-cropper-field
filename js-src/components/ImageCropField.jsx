@@ -7,8 +7,6 @@ import { Input } from "reactstrap";
 class ImageCropField extends Component {
   constructor(props) {
     super(props);
-
-    console.log(props);
   }
 
   /**
@@ -16,7 +14,7 @@ class ImageCropField extends Component {
    */
   render() {
     return (
-      <div class="imagecrop-field">
+      <div class="imagecrop-field" name={this.props.data.name}>
         <div class="imagecrop-field-toolbar">
           <span class="imagecrop-field-move-tool tool-on">
             <svg
@@ -98,13 +96,12 @@ jQuery.entwine("lenovo", function($) {
   //handle adding the field to the image
   $(".imagecrop-field-selection").entwine({
     onmatch: function() {
+      //add the cropper to the image
       $(this).cropper({
         responsive: false,
-        minContainerWidth: 500,
-        minContainerHeight: 400,
+        minContainerWidth: 542,
+        minContainerHeight: 500,
       });
-
-      console.log("jquery working");
     },
   });
   //handle the move tool
@@ -197,6 +194,42 @@ jQuery.entwine("lenovo", function($) {
       target.cropper("reset");
 
       $(this)._super();
+    },
+  });
+  //save tool
+  $(".imagecrop-field-savecropped-tool").entwine({
+    onclick: function(e) {
+      //get the form
+      const form = this.parents("form");
+      let formUrl = form.attr("action");
+      let url = `${encodeURI(formUrl)}/field/${this.parent()
+        .parent()
+        .attr("name")}/cropImage`;
+      let target = this.parent()
+        .parent()
+        .find(".imagecrop-field-selection");
+
+      //testing
+      // $(".asset-dropzone.flexbox-area-grow").html(
+      //   target.cropper("getCroppedCanvas")
+      // );
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          image: target.cropper("getCroppedCanvas").toDataURL(),
+        },
+        success: function(resultData) {
+          //results
+          let result = JSON.parse(resultData);
+
+          //did it finish successfully on the php side?
+          if (result.status === "complete") {
+            console.log(result.status);
+          }
+        },
+      });
     },
   });
 });
