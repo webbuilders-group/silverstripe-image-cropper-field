@@ -30,6 +30,10 @@
   background-color: #d8e4eb;
 }
 
+.imagecrop-field {
+  max-height: 600px;
+}
+
 @media (min-width: 1200px) {
   .editor {
     width: 600px !important;
