@@ -2,6 +2,7 @@
 
 namespace WebbuildersGroup\ImageCropField\Forms;
 
+use SilverStripe\AssetAdmin\Controller\AssetAdmin;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Director;
 use SilverStripe\Forms\FormField;
@@ -85,7 +86,7 @@ class ImageCropField extends FormField
         //check to see if there is an image and set the data
         if ($this->data["image"]) {
             //the image
-            $image = $this->data["image"]->ScaleWidth(500);
+            $image = $this->data["image"];
             $state['data'] += [
                 'image' => $image->URL,
                 'name' => $this->getName(),
@@ -105,6 +106,26 @@ class ImageCropField extends FormField
     }
 
     /**
+     * Will attepmt to create the image in ss, regenerate thumbnails, and publish it.
+     *
+     * @param [image stream] $imageData
+     * @return void
+     */
+    public function createImage($imageData)
+    {
+        //create an image object
+        $finalImage = Image::create();
+        //use the record id and time to make the file name unique as the resampled images don't work otherwise
+        $finalImage->setFromString($imageData, "Cropped/cropped" . time() . ".jpg");
+        $finalImage->Title = "cropped";
+        $finalImage->write();
+
+        //regenerate thumbnails and publish it
+        AssetAdmin::create()->generateThumbnails($finalImage);
+        $finalImage->publishSingle();
+    }
+
+    /**
      * Crop the image using the data saved on the parent dataobject
      *
      * @return void
@@ -117,11 +138,12 @@ class ImageCropField extends FormField
             $data = $this->request->postVars();
 
             //clean the image string
-            $img = str_replace('data:image/png;base64,', '', $data['image']);
-            $img = str_replace(' ', '+', $img);
-
+            $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
             //the actual image
             $fileData = base64_decode($img);
+
+            //create the image in SilverStripe
+            $this->createImage($fileData);
 
             $return = [
                 'status' => 'complete',
@@ -133,17 +155,5 @@ class ImageCropField extends FormField
             //return as this shouldn't be hit otherwise
             return $this->redirectBack();
         }
-
-        //if cropping has not been turned on redirect back
-        // if (!$this->getEnableCrop()) {
-        //     $this->getForm()->sessionMessage('Cropping is disabled for this field', 'bad');
-        //     return $this->redirectBack();
-        // }
-
-        // //var_dump($this->getForm()->sessionMessage('test'));exit;
-        // //var_dump($this->data["data"]->{$this->data["imageData"]});exit;
-        // $this->getForm()->sessionMessage('Not implimented yet. Should lean on php for cropping.', 'warning');
-
-        // return $this->redirectBack();
     }
 }
