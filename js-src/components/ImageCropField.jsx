@@ -101,7 +101,6 @@ jQuery.entwine("lenovo", function($) {
         responsive: false,
         minContainerWidth: 542,
         minContainerHeight: 500,
-        scalable: true,
       });
     },
   });
