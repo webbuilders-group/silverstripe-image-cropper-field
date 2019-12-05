@@ -111,13 +111,15 @@ class ImageCropField extends FormField
      * @param [image stream] $imageData
      * @return void
      */
-    public function createImage($imageData)
+    public function createImage($imageData, $name, $width, $height)
     {
+        //the new tilte/filename
+        $newTitle = $name . "_cropped_" . $width . "x" . $height;
         //create an image object
         $finalImage = Image::create();
         //use the record id and time to make the file name unique as the resampled images don't work otherwise
-        $finalImage->setFromString($imageData, "Cropped/cropped" . time() . ".jpg");
-        $finalImage->Title = "cropped";
+        $finalImage->setFromString($imageData, "Cropped/" . $newTitle . ".jpg");
+        $finalImage->Title = $newTitle;
         $finalImage->write();
 
         //regenerate thumbnails and publish it
@@ -143,7 +145,7 @@ class ImageCropField extends FormField
             $fileData = base64_decode($img);
 
             //create the image in SilverStripe
-            $this->createImage($fileData);
+            $this->createImage($fileData, $data['name'], $data['width'], $data['height']);
 
             $return = [
                 'status' => 'complete',

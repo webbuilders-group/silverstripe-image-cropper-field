@@ -67,9 +67,19 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
 
+    //#Form_fileEditForm_Name
+    let fieldName = e.target
+      .closest("form")
+      .querySelector("#Form_fileEditForm_Name").value;
+    //remove the period
+    fieldName = fieldName.substring(0, fieldName.indexOf("."));
+
     //the cropped image
     let data = {
       image: cropper.getCroppedCanvas().toDataURL(),
+      width: cropper.getData()["width"].toFixed(),
+      height: cropper.getData()["height"].toFixed(),
+      name: fieldName,
     };
 
     //add loading
