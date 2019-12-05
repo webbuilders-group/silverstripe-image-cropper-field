@@ -12,6 +12,4 @@ SilverStripe\Admin\LeftAndMain:
     - "vendor/webbuilders-group/image-cropper-field/css/cropper.min.css"
     - "vendor/webbuilders-group/image-cropper-field/css/imagescropfield.css"
   extra_requirements_javascript:
-    - "vendor/webbuilders-group/image-cropper-field/javascript/cropper.min.js"
-    - "vendor/webbuilders-group/image-cropper-field/javascript/jquery-cropper.min.js"
     - "vendor/webbuilders-group/image-cropper-field/javascript/boot/boot.js"
