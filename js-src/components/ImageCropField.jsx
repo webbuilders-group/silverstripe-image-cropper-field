@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { Input } from "reactstrap";
 import MoveTool from "./MoveTool.jsx";
 import SelectionTool from "./SelectionTool.jsx";
 import ZoominTool from "./ZoominTool.jsx";
@@ -13,26 +12,58 @@ import SavecroppedTool from "./SavecroppedTool.jsx";
 class ImageCropField extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    };
+
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  handleSave(e) {
+    // const form = e.target.closest("form");
+    // let formUrl = form.getAttribute("action");
+    // let url =
+    //   encodeURI(formUrl) +
+    //   "/field/" +
+    //   e.target.closest(".imagecrop-field").getAttribute("name") +
+    //   "/cropImage";
+    // //find the cropper
+    // let target = e.target
+    //   .closest(".imagecrop-field")
+    //   .querySelector(".imagecrop-field-selection");
+    this.setState({
+      loading: true,
+    });
   }
 
   /**
    * Handles rendering the button
    */
   render() {
+    let loadingSpinner = null;
+    if (this.state.loading) {
+      // const Loading = this.props.LoadingComponent;
+      loadingSpinner = loading;
+    }
+
     return (
       <div class="imagecrop-field" name={this.props.data.name}>
+        {loadingSpinner}
         <div class="imagecrop-field-toolbar">
           <MoveTool></MoveTool>
           <SelectionTool></SelectionTool>
           <ZoominTool></ZoominTool>
           <ZoomoutTool></ZoomoutTool>
           <ResetTool></ResetTool>
-          <SavecroppedTool></SavecroppedTool>
+          <SavecroppedTool onClick={e => this.handleSave(e)}></SavecroppedTool>
         </div>
-        <img
-          class="imagecrop-field-selection"
-          src={this.props.data.image}
-        ></img>
+        <div class="img-container">
+          <img
+            class="imagecrop-field-selection"
+            src={this.props.data.image}
+          ></img>
+        </div>
       </div>
     );
   }
@@ -47,13 +78,10 @@ jQuery.entwine("ImageCropMain", function($) {
     onmatch: function() {
       //add the cropper to the image
       $(this).cropper({
-        responsive: false,
+        responsive: true,
         minContainerWidth: 542,
         minContainerHeight: 500,
       });
-    },
-    disappear: function() {
-      console.log("test");
     },
   });
 });

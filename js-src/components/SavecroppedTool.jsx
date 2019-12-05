@@ -2,11 +2,28 @@
 import React, { Component } from "react";
 
 class SavecroppedTool extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showModal: false,
+    };
+
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  }
+
   render() {
     return (
       <span
         class="imagecrop-field-savecropped-tool tool-on"
         alt="Create cropped image"
+        onClick={this.props.onClick}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,6 +75,8 @@ jQuery.entwine("ImageCropSavecroppedTool", function($) {
           //did it finish successfully on the php side?
           if (result.status === "complete") {
             console.log(result.status);
+            //reload the page
+            location.reload();
           }
         },
       });

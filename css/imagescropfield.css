@@ -30,8 +30,9 @@
   background-color: #d8e4eb;
 }
 
-.imagecrop-field {
-  max-height: 600px;
+.img-container {
+  max-height: 500px;
+  max-width: 100%;
 }
 
 @media (min-width: 1200px) {
