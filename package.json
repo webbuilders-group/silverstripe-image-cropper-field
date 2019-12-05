@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "css.escape": "^1.5.1"
+    "css.escape": "^1.5.1",
+    "react-tooltip": "^3.11.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

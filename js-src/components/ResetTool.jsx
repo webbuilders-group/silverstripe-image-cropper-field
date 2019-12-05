@@ -6,6 +6,7 @@ class ResetTool extends Component {
       <span
         class="imagecrop-field-reset-tool tool-on"
         onClick={this.props.onClick}
+        data-tip="Rest the crop area"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

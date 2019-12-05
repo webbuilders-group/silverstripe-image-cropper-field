@@ -6,7 +6,11 @@ class SelectionTool extends Component {
     let classes = "imagecrop-field-selection-tool tool-on " + extra;
 
     return (
-      <span class={classes} onClick={this.props.onClick}>
+      <span
+        class={classes}
+        onClick={this.props.onClick}
+        data-tip="Toggle the selection tool"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

@@ -9,6 +9,7 @@ import ZoomoutTool from "./ZoomoutTool.jsx";
 import ResetTool from "./ResetTool.jsx";
 import SavecroppedTool from "./SavecroppedTool.jsx";
 import Cropper from "../assets/cropper.min.js";
+import ReactTooltip from "react-tooltip";
 
 class ImageCropField extends Component {
   constructor(props) {
@@ -74,10 +75,8 @@ class ImageCropField extends Component {
     this.postAjax(url, data, function(data) {
       console.log(data);
 
-      //remove loading
-      self.setState({
-        loading: false,
-      });
+      //reload
+      location.reload();
     });
   }
 
@@ -194,6 +193,7 @@ class ImageCropField extends Component {
     return (
       <div class="imagecrop-field" name={this.props.data.name}>
         {loadingSpinner}
+        <ReactTooltip />
         <div class="imagecrop-field-toolbar">
           <MoveTool
             onClick={e => this.moveTool(e)}

@@ -6,6 +6,7 @@ class ZoominTool extends Component {
       <span
         class="imagecrop-field-zoomin-tool tool-on"
         onClick={this.props.onClick}
+        data-tip="Zoom in"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

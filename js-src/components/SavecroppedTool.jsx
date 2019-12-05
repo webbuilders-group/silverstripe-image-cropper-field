@@ -21,7 +21,7 @@ class SavecroppedTool extends Component {
     return (
       <span
         class="imagecrop-field-savecropped-tool tool-on"
-        alt="Create cropped image"
+        data-tip="Save the cropped image to the Cropped folder"
         onClick={this.props.onClick}
       >
         <svg

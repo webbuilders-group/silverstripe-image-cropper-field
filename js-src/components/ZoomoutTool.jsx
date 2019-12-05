@@ -7,6 +7,7 @@ class ZoomoutTool extends Component {
       <span
         class="imagecrop-field-zoomout-tool tool-on"
         onClick={this.props.onClick}
+        data-tip="Zoom out"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
