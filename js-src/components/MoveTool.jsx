@@ -1,10 +1,12 @@
-/* global jQuery */
 import React, { Component } from "react";
 
 class MoveTool extends Component {
   render() {
+    let extra = this.props.extraClasses;
+    let classes = "imagecrop-field-selection-tool tool-on " + extra;
+
     return (
-      <span class="imagecrop-field-move-tool tool-on">
+      <span class={classes} onClick={this.props.onClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -19,32 +21,3 @@ class MoveTool extends Component {
 }
 
 export default MoveTool;
-
-// jquery to handle the image field
-jQuery.entwine("ImageCropMoveTool", function($) {
-  //handle the move tool
-  $(".imagecrop-field-move-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle move mode
-      target.cropper("setDragMode", "move");
-
-      //update the active icon
-      $(this)
-        .parent()
-        .parent()
-        .find(".imagecrop-field-toolbar > span")
-        .each(function() {
-          $(this).removeClass("active");
-        });
-
-      $(this).addClass("active");
-
-      $(this)._super();
-    },
-  });
-});

@@ -4,7 +4,10 @@ import React, { Component } from "react";
 class ZoomoutTool extends Component {
   render() {
     return (
-      <span class="imagecrop-field-zoomout-tool tool-on">
+      <span
+        class="imagecrop-field-zoomout-tool tool-on"
+        onClick={this.props.onClick}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -19,21 +22,3 @@ class ZoomoutTool extends Component {
 }
 
 export default ZoomoutTool;
-
-// jquery to handle the image field
-jQuery.entwine("ImageCropZoomoutTool", function($) {
-  //handle zoom out tool
-  $(".imagecrop-field-zoomout-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle crop mode
-      target.cropper("zoom", "-0.1");
-
-      $(this)._super();
-    },
-  });
-});

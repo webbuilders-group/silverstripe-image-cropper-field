@@ -1,4 +1,3 @@
-/* global jQuery */
 import React, { Component } from "react";
 
 class SavecroppedTool extends Component {

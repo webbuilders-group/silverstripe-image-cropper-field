@@ -1,10 +1,12 @@
-/* global jQuery */
 import React, { Component } from "react";
 
 class ResetTool extends Component {
   render() {
     return (
-      <span class="imagecrop-field-reset-tool tool-on">
+      <span
+        class="imagecrop-field-reset-tool tool-on"
+        onClick={this.props.onClick}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -19,21 +21,3 @@ class ResetTool extends Component {
 }
 
 export default ResetTool;
-
-// jquery to handle the image field
-jQuery.entwine("ImageCropResetTool", function($) {
-  //handle reset
-  $(".imagecrop-field-reset-tool").entwine({
-    onclick: function(e) {
-      //get the proper edit form so we can have multiple image selection fields
-      let target = this.parent()
-        .parent()
-        .find(".imagecrop-field-selection");
-
-      //toggle crop mode
-      target.cropper("reset");
-
-      $(this)._super();
-    },
-  });
-});
