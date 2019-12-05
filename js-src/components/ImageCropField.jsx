@@ -22,6 +22,7 @@ class ImageCropField extends Component {
         moveTool: null,
         selectionTool: "active",
       },
+      cropper: null,
     };
 
     //bindings
@@ -39,11 +40,15 @@ class ImageCropField extends Component {
   componentDidMount(e) {
     let image = ReactDOM.findDOMNode(this.refs.image);
 
-    this.props.cropper = new Cropper(image, {
+    //store the cropper in a state
+    let cropper = this.state.cropper;
+    cropper = new Cropper(image, {
       responsive: true,
       minContainerWidth: 542,
       minContainerHeight: 500,
     });
+
+    this.setState({ cropper });
   }
 
   /**
@@ -60,7 +65,7 @@ class ImageCropField extends Component {
       "/cropImage";
 
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
 
     //the cropped image
     let data = {
@@ -85,7 +90,7 @@ class ImageCropField extends Component {
    */
   moveTool(e) {
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
     //trigger the move tool
     cropper.setDragMode("move");
     //reset active buttons
@@ -98,7 +103,7 @@ class ImageCropField extends Component {
    */
   selectionTool(e) {
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
     //trigger the crop/selection tool
     cropper.setDragMode("crop");
     //reset active buttons
@@ -111,7 +116,7 @@ class ImageCropField extends Component {
    */
   resetTool(e) {
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
     //reset
     cropper.reset();
   }
@@ -121,7 +126,7 @@ class ImageCropField extends Component {
    */
   zoominTool(e) {
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
     //zoom in
     cropper.zoom("0.1");
   }
@@ -131,7 +136,7 @@ class ImageCropField extends Component {
    */
   zoomoutTool(e) {
     //find the cropper
-    let cropper = this.props.cropper;
+    let cropper = this.state.cropper;
     //zoom in
     cropper.zoom("-0.1");
   }
