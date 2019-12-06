@@ -88,6 +88,9 @@ class ImageCropField extends Component {
       showModal: !this.state.showModal,
       preview: cropper.getCroppedCanvas().toDataURL(),
       showAlertMessage: null,
+      //set the button to none-saved state
+      cropButtonClass: "font-icon-rocket",
+      cropButtonColor: "primary",
     });
   }
 
