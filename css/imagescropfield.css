@@ -2,14 +2,14 @@
   margin-bottom: 20px;
 }
 
-.imagecrop-field-toolbar {
+.imagecrop-field .imagecrop-field-toolbar {
   background-color: #e9f0f4;
   border-top: 1px solid #ced5e1;
   border-left: 1px solid #ced5e1;
   border-right: 1px solid #ced5e1;
 }
 
-.imagecrop-field-toolbar > span {
+.imagecrop-field .imagecrop-field-toolbar > span {
   display: none;
   cursor: pointer;
   width: 60px;
@@ -18,19 +18,19 @@
   text-align: center;
 }
 
-.imagecrop-field-toolbar > span.tool-on {
+.imagecrop-field .imagecrop-field-toolbar > span.tool-on {
   display: inline-block;
 }
 
-.imagecrop-field-toolbar > span svg {
+.imagecrop-field .imagecrop-field-toolbar > span svg {
   fill: #5589a7;
 }
 
-.imagecrop-field-toolbar > span:hover {
+.imagecrop-field .imagecrop-field-toolbar > span:hover {
   background-color: #d8e4eb;
 }
 
-.imagecrop-field-toolbar > span.active {
+.imagecrop-field .imagecrop-field-toolbar > span.active {
   background-color: #d8e4eb;
 }
 
@@ -52,7 +52,7 @@
   text-align: center;
 }
 
-.image-crop-dimensions {
+.imagecrop-field .image-crop-dimensions {
   text-align: left;
 }
 
@@ -60,50 +60,50 @@
   text-align: center;
 }
 
-.image-crop-dimensions span {
+.imagecrop-field .image-crop-dimensions span {
   font-weight: 600;
 }
 
-.imagecrop-field-aspect-ratio {
+.imagecrop-field .imagecrop-field-aspect-ratio {
   position: relative;
 }
 
-.imagecrop-field-aspect-ratio .dropdown {
+.imagecrop-field .imagecrop-field-aspect-ratio .dropdown {
   display: none;
 }
 
-.imagecrop-field-aspect-ratio:hover .dropdown {
+.imagecrop-field .imagecrop-field-aspect-ratio:hover .dropdown {
   display: block;
 }
 
-.imagecrop-field-aspect-ratio-option {
+.imagecrop-field .imagecrop-field-aspect-ratio-option {
   display: block;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.imagecrop-field-aspect-ratio-option input {
+.imagecrop-field .imagecrop-field-aspect-ratio-option input {
   width: calc(100% - 10px);
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 10px;
 }
 
-.imagecrop-field-aspect-ratio-option button {
+.imagecrop-field .imagecrop-field-aspect-ratio-option button {
   width: calc(100% - 20px);
   margin-left: 10px;
   margin-right: 10px;
 }
 
-.imagecrop-field-aspect-ratio-option:hover {
+.imagecrop-field .imagecrop-field-aspect-ratio-option:hover {
   background-color: #bbcbd5;
 }
 
-.imagecrop-field-aspect-ratio-option.active {
+.imagecrop-field .imagecrop-field-aspect-ratio-option.active {
   background-color: #bbcbd5;
 }
 
-.dropdown {
+.imagecrop-field .dropdown {
   position: absolute;
   top: 50px;
   z-index: 10;
