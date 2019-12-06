@@ -8,16 +8,24 @@ import ZoominTool from "./ZoominTool.jsx";
 import ZoomoutTool from "./ZoomoutTool.jsx";
 import ResetTool from "./ResetTool.jsx";
 import SavecroppedTool from "./SavecroppedTool.jsx";
+import Dimensions from "./Dimensions.jsx";
 import Cropper from "../assets/cropper.min.js";
 import ReactTooltip from "react-tooltip";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert,
+} from "reactstrap";
 
 class ImageCropField extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: false,
+      showAlertMessage: false,
       cropper: null,
       activeButton: {
         moveTool: null,
@@ -26,6 +34,11 @@ class ImageCropField extends Component {
       cropper: null,
       showModal: false,
       preview: null,
+      alertMessageLink: null,
+      selectedWidth: null,
+      selectedHeight: null,
+      cropButtonClass: "font-icon-rocket",
+      cropButtonColor: "primary",
     };
 
     //bindings
@@ -50,6 +63,12 @@ class ImageCropField extends Component {
       responsive: true,
       minContainerWidth: 542,
       minContainerHeight: 500,
+      crop(event) {
+        self.setState({
+          selectedWidth: event.detail.width.toFixed(),
+          selectedHeight: event.detail.height.toFixed(),
+        });
+      },
     });
 
     this.setState({ cropper });
@@ -62,6 +81,7 @@ class ImageCropField extends Component {
     this.setState({
       showModal: !this.state.showModal,
       preview: cropper.getCroppedCanvas().toDataURL(),
+      showAlertMessage: null,
     });
   }
 
@@ -98,16 +118,21 @@ class ImageCropField extends Component {
       name: fieldName,
     };
 
-    //add loading
     this.setState({
-      loading: true,
+      cropButtonClass: "font-icon-dot-3",
+      cropButtonColor: "outline-primary",
     });
 
+    //send the data to be processed
     this.postAjax(url, data, function(data) {
-      console.log(data);
+      let d = JSON.parse(data);
 
-      //reload
-      location.reload();
+      //close the modal and show the message
+      self.setState({
+        showAlertMessage: true,
+        alertMessageLink: d.link,
+        cropButtonClass: "font-icon-tick",
+      });
     });
   }
 
@@ -167,6 +192,9 @@ class ImageCropField extends Component {
     cropper.zoom("-0.1");
   }
 
+  /**
+   * clear all active buttons
+   */
   clearActiveButtons() {
     let buttons = this.state.activeButton;
     //set all to false
@@ -176,6 +204,9 @@ class ImageCropField extends Component {
     this.setState({ buttons });
   }
 
+  /**
+   * set the currently active button
+   */
   setActiveButton(act) {
     //set the button active
     let button = this.state.activeButton;
@@ -215,29 +246,46 @@ class ImageCropField extends Component {
    * Handles rendering the button
    */
   render() {
-    let loadingSpinner = null;
-    if (this.state.loading) {
-      // const Loading = this.props.LoadingComponent;
-      loadingSpinner = "loading";
+    let AlertMessage = null;
+    if (this.state.showAlertMessage) {
+      //show the alert message
+      AlertMessage = (
+        <Alert color="success">
+          Your image has been saved. Click{" "}
+          <a href={this.state.alertMessageLink}>here</a> to edit it.
+        </Alert>
+      );
     }
 
     return (
       <div class="imagecrop-field" name={this.props.data.name}>
-        {loadingSpinner}
         <ReactTooltip />
-        <Modal isOpen={this.state.showModal} toggle={() => this.toggleModal()}>
+        <Modal
+          isOpen={this.state.showModal}
+          toggle={() => this.toggleModal()}
+          className="crop-preview"
+        >
           <ModalHeader toggle={() => this.toggleModal()}>
-            Modal title
+            Crop Preview
           </ModalHeader>
           <ModalBody>
-            <img src={this.state.preview} />
+            {AlertMessage}
+            <div class="image-crop-preview">
+              <img src={this.state.preview} />
+            </div>
+            <div class="image-crop-notes">
+              <span class="small">
+                Note: image is not actual size; this is a preview.
+              </span>
+            </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() => this.handleSave()}>
-              Crop
-            </Button>
-            <Button color="secondary" onClick={() => this.toggleModal()}>
-              Cancel
+            <Button
+              color={this.state.cropButtonColor}
+              onClick={() => this.handleSave()}
+              className={this.state.cropButtonClass}
+            >
+              Crop Image
             </Button>
           </ModalFooter>
         </Modal>
@@ -262,6 +310,10 @@ class ImageCropField extends Component {
             ref="image"
           ></img>
         </div>
+        <Dimensions
+          selectedWidth={this.state.selectedWidth}
+          selectedHeight={this.state.selectedHeight}
+        />
       </div>
     );
   }

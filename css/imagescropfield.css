@@ -35,6 +35,26 @@
   max-width: 100%;
 }
 
+.crop-preview .modal-body .image-crop-preview {
+  text-align: center;
+}
+
+.crop-preview .modal-body img {
+  max-width: 100%;
+}
+
+.crop-preview .modal-body .image-crop-notes {
+  text-align: center;
+}
+
+.image-crop-dimensions {
+  text-align: right;
+}
+
+.image-crop-dimensions span {
+  font-weight: 600;
+}
+
 @media (min-width: 1200px) {
   .editor {
     width: 600px !important;
