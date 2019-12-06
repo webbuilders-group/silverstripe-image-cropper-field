@@ -10,6 +10,7 @@ import ResetTool from "./ResetTool.jsx";
 import SavecroppedTool from "./SavecroppedTool.jsx";
 import Cropper from "../assets/cropper.min.js";
 import ReactTooltip from "react-tooltip";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class ImageCropField extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class ImageCropField extends Component {
         selectionTool: "active",
       },
       cropper: null,
+      showModal: false,
+      preview: null,
     };
 
     //bindings
@@ -32,6 +35,7 @@ class ImageCropField extends Component {
     this.resetTool = this.resetTool.bind(this);
     this.zoominTool = this.zoominTool.bind(this);
     this.zoomoutTool = this.zoomoutTool.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   /*
@@ -39,7 +43,7 @@ class ImageCropField extends Component {
    */
   componentDidMount(e) {
     let image = ReactDOM.findDOMNode(this.refs.image);
-
+    let self = this;
     //store the cropper in a state
     let cropper = this.state.cropper;
     cropper = new Cropper(image, {
@@ -51,24 +55,36 @@ class ImageCropField extends Component {
     this.setState({ cropper });
   }
 
+  toggleModal() {
+    //find the cropper
+    let cropper = this.state.cropper;
+
+    this.setState({
+      showModal: !this.state.showModal,
+      preview: cropper.getCroppedCanvas().toDataURL(),
+    });
+  }
+
   /**
    * handle saving the cropped image
    */
-  handleSave(e) {
-    const form = e.target.closest("form");
+  handleSave() {
+    const form = ReactDOM.findDOMNode(this.refs.image).closest("form");
     let formUrl = form.getAttribute("action");
     let self = this;
     let url =
       encodeURI(formUrl) +
       "/field/" +
-      e.target.closest(".imagecrop-field").getAttribute("name") +
+      ReactDOM.findDOMNode(this.refs.image)
+        .closest(".imagecrop-field")
+        .getAttribute("name") +
       "/cropImage";
 
     //find the cropper
     let cropper = this.state.cropper;
 
     //#Form_fileEditForm_Name
-    let fieldName = e.target
+    let fieldName = ReactDOM.findDOMNode(this.refs.image)
       .closest("form")
       .querySelector("#Form_fileEditForm_Name").value;
     //remove the period
@@ -209,6 +225,22 @@ class ImageCropField extends Component {
       <div class="imagecrop-field" name={this.props.data.name}>
         {loadingSpinner}
         <ReactTooltip />
+        <Modal isOpen={this.state.showModal} toggle={() => this.toggleModal()}>
+          <ModalHeader toggle={() => this.toggleModal()}>
+            Modal title
+          </ModalHeader>
+          <ModalBody>
+            <img src={this.state.preview} />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={() => this.handleSave()}>
+              Crop
+            </Button>
+            <Button color="secondary" onClick={() => this.toggleModal()}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
         <div class="imagecrop-field-toolbar">
           <MoveTool
             onClick={e => this.moveTool(e)}
@@ -221,7 +253,7 @@ class ImageCropField extends Component {
           <ZoominTool onClick={e => this.zoominTool(e)}></ZoominTool>
           <ZoomoutTool onClick={e => this.zoomoutTool(e)} />
           <ResetTool onClick={e => this.resetTool(e)} />
-          <SavecroppedTool onClick={e => this.handleSave(e)}></SavecroppedTool>
+          <SavecroppedTool onClick={() => this.toggleModal()}></SavecroppedTool>
         </div>
         <div class="img-container">
           <img
