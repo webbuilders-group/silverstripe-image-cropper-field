@@ -3,8 +3,7 @@ import React, { Component } from "react";
 class AspectRatioButton extends Component {
   render() {
     let extra = "";
-    console.log(this.props.extraClasses);
-    console.log(this.props.name);
+    //is the name of this element the same as the currently active element
     if (this.props.extraClasses === this.props.name) {
       extra = "active";
     }
