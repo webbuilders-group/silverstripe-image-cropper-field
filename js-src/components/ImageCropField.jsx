@@ -95,7 +95,15 @@ class ImageCropField extends Component {
    * handle saving the cropped image
    */
   handleSave() {
-    const form = ReactDOM.findDOMNode(this.refs.image).closest("form");
+    let form = document.getElementById("Form_fileEditForm");
+    //#Form_fileEditForm_Name
+    let fieldName = document.getElementById("Form_fileEditForm_Name");
+    //if the above form is empty, assume we are in the file insert form and atempt to get that
+    if (form === null) {
+      form = document.getElementById("Form_fileInsertForm");
+      //#Form_fileInsertForm_Name
+      fieldName = document.getElementById("Form_fileInsertForm_Name");
+    }
     let formUrl = form.getAttribute("action");
     let self = this;
     let url =
@@ -109,12 +117,8 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
 
-    //#Form_fileEditForm_Name
-    let fieldName = ReactDOM.findDOMNode(this.refs.image)
-      .closest("form")
-      .querySelector("#Form_fileEditForm_Name").value;
     //remove the period
-    fieldName = fieldName.substring(0, fieldName.indexOf("."));
+    fieldName = fieldName.value.substring(0, fieldName.value.indexOf("."));
 
     //the cropped image
     let data = {
