@@ -352,6 +352,10 @@ class ImageCropField extends Component {
             </Button>
           </ModalFooter>
         </Modal>
+        <Dimensions
+          selectedWidth={this.state.selectedWidth}
+          selectedHeight={this.state.selectedHeight}
+        />
         <div class="imagecrop-field-toolbar">
           <MoveTool
             onClick={e => this.moveTool(e)}
@@ -432,10 +436,6 @@ class ImageCropField extends Component {
             ref="image"
           ></img>
         </div>
-        <Dimensions
-          selectedWidth={this.state.selectedWidth}
-          selectedHeight={this.state.selectedHeight}
-        />
       </div>
     );
   }
