@@ -50,8 +50,7 @@ class ImageCropField extends Component {
     this.moveTool = this.moveTool.bind(this);
     this.selectionTool = this.selectionTool.bind(this);
     this.resetTool = this.resetTool.bind(this);
-    this.zoominTool = this.zoominTool.bind(this);
-    this.zoomoutTool = this.zoomoutTool.bind(this);
+    this.zoomTool = this.zoomTool.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.handleAspectChange = this.handleAspectChange.bind(this);
     this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
@@ -190,23 +189,13 @@ class ImageCropField extends Component {
   }
 
   /**
-   * zoom in
+   * zoom
    */
-  zoominTool(e) {
+  zoomTool(e) {
     //find the cropper
     let cropper = this.state.cropper;
     //zoom in
-    cropper.zoom("0.1");
-  }
-
-  /**
-   * zoom in
-   */
-  zoomoutTool(e) {
-    //find the cropper
-    let cropper = this.state.cropper;
-    //zoom in
-    cropper.zoom("-0.1");
+    cropper.zoom(e);
   }
 
   rotateRightTool(e) {
@@ -399,7 +388,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={e => this.zoominTool(e)}
+            onClick={() => this.zoomTool("0.1")}
             name="zoomin-tool"
             datatip="Zoom in"
           >
@@ -413,7 +402,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={e => this.zoomoutTool(e)}
+            onClick={() => this.zoomTool("-0.1")}
             name="zoomout-tool"
             datatip="Zoom out"
           >
