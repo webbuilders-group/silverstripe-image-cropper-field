@@ -98,6 +98,10 @@
   background-color: #bbcbd5;
 }
 
+.imagecrop-field-aspect-ratio-option.active {
+  background-color: #bbcbd5;
+}
+
 .dropdown {
   position: absolute;
   top: 50px;
