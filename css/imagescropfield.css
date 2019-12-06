@@ -109,7 +109,7 @@
   z-index: 10;
   background-color: #d8e4eb;
   width: 200px;
-  left: 0px;
+  right: 0px;
 }
 
 @media (min-width: 1200px) {
