@@ -15,6 +15,7 @@ import Cropper from "../assets/cropper.min.js";
 import ReactTooltip from "react-tooltip";
 import {
   Button,
+  Input,
   Modal,
   ModalHeader,
   ModalBody,
@@ -41,6 +42,7 @@ class ImageCropField extends Component {
       selectedHeight: null,
       cropButtonClass: "font-icon-rocket",
       cropButtonColor: "primary",
+      customAspectRatio: "",
     };
 
     //bindings
@@ -51,6 +53,8 @@ class ImageCropField extends Component {
     this.zoominTool = this.zoominTool.bind(this);
     this.zoomoutTool = this.zoomoutTool.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleAspectChange = this.handleAspectChange.bind(this);
+    this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
   }
 
   /*
@@ -173,7 +177,7 @@ class ImageCropField extends Component {
     //reset
     cropper.reset();
     //set the aspect ratio to none
-    this.setAspectRatio(NaN);
+    this.setAspectRatio(NaN, true);
   }
 
   /**
@@ -218,14 +222,37 @@ class ImageCropField extends Component {
     this.setState({ button });
   }
 
-  setAspectRatio(number) {
+  setAspectRatio(number, clearCustom = false) {
     //find the cropper
     let cropper = this.state.cropper;
 
-    let test = test;
+    //clear the customAspectRatio state if clear custom is set to true
+    if (clearCustom) {
+      this.setState({
+        customAspectRatio: "",
+      });
+    }
 
-    //zoom in
+    //set aspect ratio
     cropper.setAspectRatio(number);
+  }
+
+  /**
+   * handle changes to the custom aspect ratio field
+   */
+  handleAspectChange(e) {
+    this.setState({ customAspectRatio: e.target.value });
+  }
+
+  /**
+   * allows the user to set a custom aspect.
+   * uses the customAspectRatio state
+   */
+  setCustomAspectRatio() {
+    let requestedAR = this.state.customAspectRatio;
+    let newData = requestedAR.split(":");
+    //set the aspect ratio
+    this.setAspectRatio(newData[0] / newData[1]);
   }
 
   /**
@@ -320,34 +347,48 @@ class ImageCropField extends Component {
           <ResetTool onClick={e => this.resetTool(e)} />
           <AspectRatio>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(16 / 9)}
+              onClick={e => this.setAspectRatio(16 / 9, true)}
               dataTip="Set the aspect ratio to 16 by 9"
             >
               16:9
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(4 / 3)}
+              onClick={e => this.setAspectRatio(4 / 3, true)}
               dataTip="Set the aspect ratio to 4 by 3"
             >
               4:3
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(1 / 1)}
+              onClick={e => this.setAspectRatio(1 / 1, true)}
               dataTip="Set the aspect ratio to 1 by 1"
             >
               1:1
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(2 / 3)}
+              onClick={e => this.setAspectRatio(2 / 3, true)}
               dataTip="Set the aspect ratio to 2 by 3"
             >
               2:3
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(NaN)}
+              onClick={e => this.setAspectRatio(NaN, true)}
               dataTip="Set the aspect ratio to free mode"
             >
               Free
+            </AspectRatioButton>
+            <AspectRatioButton>
+              <Input
+                type="text"
+                value={this.state.customAspectRatio}
+                onChange={this.handleAspectChange}
+                placeholder="Example: 16:9"
+              />
+              <Button
+                color="primary"
+                onClick={() => this.setCustomAspectRatio()}
+              >
+                Set Custom Aspect Ratio
+              </Button>
             </AspectRatioButton>
           </AspectRatio>
           <SavecroppedTool onClick={() => this.toggleModal()}></SavecroppedTool>
