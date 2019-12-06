@@ -257,7 +257,7 @@ class ImageCropField extends Component {
   }
 
   /**
-   * Handles rendering the button
+   * Handles rendering the field
    */
   render() {
     let AlertMessage = null;
