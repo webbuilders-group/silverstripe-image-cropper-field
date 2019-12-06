@@ -188,7 +188,7 @@ class ImageCropField extends Component {
   }
 
   /**
-   * zoom
+   * zoom tool
    */
   zoomTool(e) {
     //find the cropper
@@ -197,6 +197,9 @@ class ImageCropField extends Component {
     cropper.zoom(e);
   }
 
+  /**
+   * rotate tool
+   */
   rotateTool(e) {
     //find the cropper
     let cropper = this.state.cropper;
