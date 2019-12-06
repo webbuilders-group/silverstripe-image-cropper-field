@@ -9,6 +9,8 @@ import ZoomoutTool from "./ZoomoutTool.jsx";
 import ResetTool from "./ResetTool.jsx";
 import SavecroppedTool from "./SavecroppedTool.jsx";
 import Dimensions from "./Dimensions.jsx";
+import AspectRatio from "./AspectRatio.jsx";
+import AspectRatioButton from "./AspectRatioButton.jsx";
 import Cropper from "../assets/cropper.min.js";
 import ReactTooltip from "react-tooltip";
 import {
@@ -170,6 +172,8 @@ class ImageCropField extends Component {
     let cropper = this.state.cropper;
     //reset
     cropper.reset();
+    //set the aspect ratio to none
+    this.setAspectRatio(NaN);
   }
 
   /**
@@ -212,6 +216,16 @@ class ImageCropField extends Component {
     let button = this.state.activeButton;
     button[act] = "active";
     this.setState({ button });
+  }
+
+  setAspectRatio(number) {
+    //find the cropper
+    let cropper = this.state.cropper;
+
+    let test = test;
+
+    //zoom in
+    cropper.setAspectRatio(number);
   }
 
   /**
@@ -275,7 +289,10 @@ class ImageCropField extends Component {
             </div>
             <div class="image-crop-notes">
               <span class="small">
-                Note: image is not actual size; this is a preview.
+                <Dimensions
+                  selectedWidth={this.state.selectedWidth}
+                  selectedHeight={this.state.selectedHeight}
+                />
               </span>
             </div>
           </ModalBody>
@@ -301,6 +318,38 @@ class ImageCropField extends Component {
           <ZoominTool onClick={e => this.zoominTool(e)}></ZoominTool>
           <ZoomoutTool onClick={e => this.zoomoutTool(e)} />
           <ResetTool onClick={e => this.resetTool(e)} />
+          <AspectRatio>
+            <AspectRatioButton
+              onClick={e => this.setAspectRatio(16 / 9)}
+              dataTip="Set the aspect ratio to 16 by 9"
+            >
+              16:9
+            </AspectRatioButton>
+            <AspectRatioButton
+              onClick={e => this.setAspectRatio(4 / 3)}
+              dataTip="Set the aspect ratio to 4 by 3"
+            >
+              4:3
+            </AspectRatioButton>
+            <AspectRatioButton
+              onClick={e => this.setAspectRatio(1 / 1)}
+              dataTip="Set the aspect ratio to 1 by 1"
+            >
+              1:1
+            </AspectRatioButton>
+            <AspectRatioButton
+              onClick={e => this.setAspectRatio(2 / 3)}
+              dataTip="Set the aspect ratio to 2 by 3"
+            >
+              2:3
+            </AspectRatioButton>
+            <AspectRatioButton
+              onClick={e => this.setAspectRatio(NaN)}
+              dataTip="Set the aspect ratio to free mode"
+            >
+              Free
+            </AspectRatioButton>
+          </AspectRatio>
           <SavecroppedTool onClick={() => this.toggleModal()}></SavecroppedTool>
         </div>
         <div class="img-container">

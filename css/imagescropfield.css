@@ -51,8 +51,43 @@
   text-align: right;
 }
 
+.crop-preview .image-crop-dimensions {
+  text-align: center;
+}
+
 .image-crop-dimensions span {
   font-weight: 600;
+}
+
+.imagecrop-field-aspect-ratio {
+  position: relative;
+}
+
+.imagecrop-field-aspect-ratio .dropdown {
+  display: none;
+}
+
+.imagecrop-field-aspect-ratio:hover .dropdown {
+  display: block;
+}
+
+.imagecrop-field-aspect-ratio-option {
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.imagecrop-field-aspect-ratio-option:hover {
+  background-color: #bbcbd5;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  z-index: 10;
+  background-color: #d8e4eb;
+  width: 200px;
+  left: 0px;
 }
 
 @media (min-width: 1200px) {
