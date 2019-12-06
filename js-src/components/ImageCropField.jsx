@@ -54,8 +54,7 @@ class ImageCropField extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.handleAspectChange = this.handleAspectChange.bind(this);
     this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
-    this.rotateRightTool = this.rotateRightTool.bind(this);
-    this.rotateLeftTool = this.rotateLeftTool.bind(this);
+    this.rotateTool = this.rotateTool.bind(this);
   }
 
   /*
@@ -198,18 +197,11 @@ class ImageCropField extends Component {
     cropper.zoom(e);
   }
 
-  rotateRightTool(e) {
+  rotateTool(e) {
     //find the cropper
     let cropper = this.state.cropper;
     //zoom in
-    cropper.rotate("15");
-  }
-
-  rotateLeftTool(e) {
-    //find the cropper
-    let cropper = this.state.cropper;
-    //zoom in
-    cropper.rotate("-15");
+    cropper.rotate(e);
   }
 
   /**
@@ -416,9 +408,9 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={e => this.rotateLeftTool(e)}
+            onClick={() => this.rotateTool("-15")}
             name="rotate-left-tool"
-            data-tip="Rotate the image left"
+            datatip="Rotate the image left"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -430,9 +422,9 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={e => this.rotateRightTool(e)}
+            onClick={() => this.rotateTool("15")}
             name="rotate-right-tool"
-            data-tip="Rotate the image right"
+            datatip="Rotate the image right"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
