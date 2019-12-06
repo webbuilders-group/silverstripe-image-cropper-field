@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import SavecroppedTool from "./SavecroppedTool.jsx";
 import Dimensions from "./Dimensions.jsx";
 import AspectRatio from "./AspectRatio.jsx";
 import AspectRatioButton from "./AspectRatioButton.jsx";
@@ -484,7 +483,20 @@ class ImageCropField extends Component {
               </Button>
             </AspectRatioButton>
           </AspectRatio>
-          <SavecroppedTool onClick={() => this.toggleModal()}></SavecroppedTool>
+          <ToolbarButton
+            onClick={() => this.toggleModal()}
+            name="savecropped-tool"
+            data-tip="Save the cropped image to the Cropped folder"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+            >
+              <path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z" />
+            </svg>
+          </ToolbarButton>
         </div>
         <div class="img-container">
           <img
