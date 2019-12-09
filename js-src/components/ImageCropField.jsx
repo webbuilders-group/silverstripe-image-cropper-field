@@ -206,6 +206,10 @@ class ImageCropField extends Component {
     cropper.reset();
     //set the aspect ratio to none
     this.setAspectRatio(NaN, true, "free");
+    //close the edit
+    this.setState({
+      toggleEditField: "",
+    });
   }
 
   /**
