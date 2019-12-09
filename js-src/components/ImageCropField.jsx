@@ -59,7 +59,7 @@ class ImageCropField extends Component {
     this.handleAspectChange = this.handleAspectChange.bind(this);
     this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
     this.rotateTool = this.rotateTool.bind(this);
-    this.toggleEditField = this.toggleEditField.bind(this);
+    this.handleEditFieldOnChange = this.handleEditFieldOnChange.bind(this);
   }
 
   /*
