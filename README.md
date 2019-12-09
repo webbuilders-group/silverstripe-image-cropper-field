@@ -1,4 +1,4 @@
-image-cropper-field
+silverstripe-image-cropper-field
 =================
 
 Adds the ability to crop images from within the silverstripe file section.

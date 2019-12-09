@@ -1,5 +1,5 @@
 {
-  "name": "webbuilders-group/image-crop-field",
+  "name": "webbuilders-group/silverstripe-image-cropper-field",
   "description": "Adds a new field to images to allow them to be cropped. This will give the ability to save as new or overwrite current image.",
   "type": "silverstripe-vendormodule",
   "keywords": [

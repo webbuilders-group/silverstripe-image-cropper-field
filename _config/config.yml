@@ -9,7 +9,7 @@ SilverStripe\AssetAdmin\Forms\ImageFormFactory:
 
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
-    - "vendor/webbuilders-group/image-cropper-field/css/cropper.min.css"
-    - "vendor/webbuilders-group/image-cropper-field/css/imagescropfield.css"
+    - "webbuilders-group/silverstripe-image-cropper-field: css/cropper.min.css"
+    - "webbuilders-group/silverstripe-image-cropper-field: css/imagescropfield.css"
   extra_requirements_javascript:
-    - "vendor/webbuilders-group/image-cropper-field/javascript/boot/boot.js"
+    - "webbuilders-group/silverstripe-image-cropper-field: javascript/boot/boot.js"
