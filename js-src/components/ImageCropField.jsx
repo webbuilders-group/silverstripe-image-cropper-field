@@ -111,7 +111,8 @@ class ImageCropField extends Component {
     //set the state
     this.setState({
       toggleEditField: state,
-      editFieldValue: "",
+      editFieldValue:
+        this.state.selectedWidth + "x" + this.state.selectedHeight,
     });
   }
 
