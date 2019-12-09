@@ -394,9 +394,12 @@ class ImageCropField extends Component {
         <Dimensions
           selectedWidth={this.state.selectedWidth}
           selectedHeight={this.state.selectedHeight}
+          //the text field that handles editing the cropper's dimensions.
           editFieldValue={this.state.editFieldValue}
           editFieldOnChange={e => this.handleEditFieldOnChange(e)}
+          //toggle the field
           onEditButtonClick={() => this.toggleEditField()}
+          //should it be shown
           showEditField={this.state.toggleEditField}
         />
         <div class="imagecrop-field-toolbar">
