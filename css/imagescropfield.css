@@ -112,6 +112,20 @@
   right: 0px;
 }
 
+.image-crop-dimensions-edit-button {
+  cursor: pointer;
+}
+
+.image-crop-dimensions-edit {
+  display: none;
+  padding: 10px;
+  background-color: #e9f0f4;
+}
+
+.image-crop-dimensions-edit.show {
+  display: block;
+}
+
 @media (min-width: 1200px) {
   .editor {
     width: 600px !important;

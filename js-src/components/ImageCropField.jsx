@@ -43,6 +43,10 @@ class ImageCropField extends Component {
       customAspectRatio: "",
       //use to determin which aspect ratio button to highlight
       selectedAspect: "free",
+      //the edit field value
+      editFieldValue: "",
+      //toogle edit field for aspect
+      toggleEditField: "",
     };
 
     //bindings
@@ -55,6 +59,7 @@ class ImageCropField extends Component {
     this.handleAspectChange = this.handleAspectChange.bind(this);
     this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
     this.rotateTool = this.rotateTool.bind(this);
+    this.toggleEditField = this.toggleEditField.bind(this);
   }
 
   /*
@@ -91,6 +96,22 @@ class ImageCropField extends Component {
       //set the button to none-saved state
       cropButtonClass: "font-icon-rocket",
       cropButtonColor: "primary",
+    });
+  }
+
+  /**
+   * Toggle the edit field for edting the the croppers width and height
+   */
+  toggleEditField() {
+    let state = "";
+    //determine if it is closed and set to open
+    if (this.state.toggleEditField === "") {
+      state = "show";
+    }
+    //set the state
+    this.setState({
+      toggleEditField: state,
+      editFieldValue: "",
     });
   }
 
@@ -185,6 +206,10 @@ class ImageCropField extends Component {
     cropper.reset();
     //set the aspect ratio to none
     this.setAspectRatio(NaN, true, "free");
+    //clear edit field
+    this.setState({
+      editFieldValue: "",
+    });
   }
 
   /**
@@ -256,6 +281,28 @@ class ImageCropField extends Component {
    */
   handleAspectChange(e) {
     this.setState({ customAspectRatio: e.target.value });
+  }
+
+  /**
+   * handle when the edit field has been changed.
+   */
+  handleEditFieldOnChange(e) {
+    //find the cropper
+    let cropper = this.state.cropper;
+
+    //set the state
+    this.setState({
+      editFieldValue: e.target.value,
+    });
+
+    //get the new data
+    let newData = e.target.value.split("x");
+
+    //set the cropper field
+    cropper.setData({
+      width: parseInt(newData[0]),
+      height: parseInt(newData[1]),
+    });
   }
 
   /**
@@ -350,6 +397,10 @@ class ImageCropField extends Component {
         <Dimensions
           selectedWidth={this.state.selectedWidth}
           selectedHeight={this.state.selectedHeight}
+          editFieldValue={this.state.editFieldValue}
+          editFieldOnChange={e => this.handleEditFieldOnChange(e)}
+          onEditButtonClick={() => this.toggleEditField()}
+          showEditField={this.state.toggleEditField}
         />
         <div class="imagecrop-field-toolbar">
           <ToolbarButton
