@@ -57,7 +57,6 @@ class ImageCropField extends Component {
     this.zoomTool = this.zoomTool.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.handleAspectChange = this.handleAspectChange.bind(this);
-    this.setCustomAspectRatio = this.setCustomAspectRatio.bind(this);
     this.rotateTool = this.rotateTool.bind(this);
     this.handleEditFieldOnChange = this.handleEditFieldOnChange.bind(this);
   }
@@ -278,6 +277,12 @@ class ImageCropField extends Component {
    */
   handleAspectChange(e) {
     this.setState({ customAspectRatio: e.target.value });
+
+    //handle aspect change
+    let requestedAR = e.target.value;
+    let newData = requestedAR.split(":");
+    //set the aspect ratio
+    this.setAspectRatio(newData[0] / newData[1], false, "custom");
   }
 
   /**
@@ -300,17 +305,6 @@ class ImageCropField extends Component {
       width: parseInt(newData[0]),
       height: parseInt(newData[1]),
     });
-  }
-
-  /**
-   * allows the user to set a custom aspect.
-   * uses the customAspectRatio state
-   */
-  setCustomAspectRatio() {
-    let requestedAR = this.state.customAspectRatio;
-    let newData = requestedAR.split(":");
-    //set the aspect ratio
-    this.setAspectRatio(newData[0] / newData[1], false, "custom");
   }
 
   /**
@@ -554,12 +548,6 @@ class ImageCropField extends Component {
                 onChange={this.handleAspectChange}
                 placeholder="Example: 16:9"
               />
-              <Button
-                color="primary"
-                onClick={() => this.setCustomAspectRatio()}
-              >
-                Set Custom Aspect Ratio
-              </Button>
             </AspectRatioButton>
           </AspectRatio>
           <ToolbarButton
