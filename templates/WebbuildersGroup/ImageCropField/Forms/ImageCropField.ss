@@ -1,8 +1,8 @@
-<% require javascript(webbuilders-group/image-crop-field: javascript/cropper.min.js) %>
-<% require css(webbuilders-group/image-crop-field: css/cropper.min.css) %>
-<% require javascript(webbuilders-group/image-crop-field: javascript/jquery-cropper.min.js) %>
-<% require javascript(webbuilders-group/image-crop-field: javascript/imagescropfield.js) %>
-<% require css(webbuilders-group/image-crop-field: css/imagescropfield.css) %>
+<% require javascript(webbuilders-group/silverstripe-image-cropper-field: javascript/cropper.min.js) %>
+<% require css(webbuilders-group/silverstripe-image-cropper-field: css/cropper.min.css) %>
+<% require javascript(webbuilders-group/silverstripe-image-cropper-field: javascript/jquery-cropper.min.js) %>
+<% require javascript(webbuilders-group/silverstripe-image-cropper-field: javascript/imagescropfield.js) %>
+<% require css(webbuilders-group/silverstripe-image-cropper-field: css/imagescropfield.css) %>
 
 
 <div class="imageselectionfield $extraClass" $AttributesHTML>
