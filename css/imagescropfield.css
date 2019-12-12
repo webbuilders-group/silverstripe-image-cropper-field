@@ -51,6 +51,8 @@
 
 .crop-preview .modal-body .image-crop-preview {
   text-align: center;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC");
+  padding: 10px;
 }
 
 .crop-preview .modal-body img {
@@ -68,6 +70,11 @@
 
 .crop-preview .image-crop-dimensions {
   text-align: center;
+}
+
+.crop-preview .image-crop-filename {
+  padding: 10px;
+  background-color: #e9f0f4;
 }
 
 .imagecrop-field .image-crop-dimensions span {

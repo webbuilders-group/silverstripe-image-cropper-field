@@ -111,14 +111,26 @@ class ImageCropField extends FormField
      * @param [image stream] $imageData
      * @return void
      */
-    public function createImage($imageData, $name, $width, $height)
+    public function createImage($imageData, $name)
     {
         //the new tilte/filename
-        $newTitle = $name . "_cropped_" . $width . "x" . $height;
+        $newTitle = $name;
+
+        //clean the strings
+        $newTitle = str_replace('.', '', $newTitle);
+        $newTitle = str_replace('\\', '/', $newTitle);
+
+        //remove a slash from the start
+        $newTitle = ltrim($newTitle, '/');
+
         //create an image object
         $finalImage = Image::create();
         //use the record id and time to make the file name unique as the resampled images don't work otherwise
-        $finalImage->setFromString($imageData, "Cropped/" . $newTitle . ".jpg");
+        $finalImage->setFromString($imageData, $newTitle . ".jpg");
+        //remove folder names frome title
+        $tokens = explode('/', $newTitle);
+        $newTitle = trim(end($tokens));
+        //set the title
         $finalImage->Title = $newTitle;
         $finalImage->write();
 
@@ -147,7 +159,7 @@ class ImageCropField extends FormField
             $fileData = base64_decode($img);
 
             //create the image in SilverStripe
-            $editLink = $this->createImage($fileData, $data['name'], $data['width'], $data['height']);
+            $editLink = $this->createImage($fileData, $data['name']);
 
             $return = [
                 'status' => 'complete',

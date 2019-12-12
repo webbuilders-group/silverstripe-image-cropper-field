@@ -47,6 +47,8 @@ class ImageCropField extends Component {
       editFieldValue: "",
       //toogle edit field for aspect
       toggleEditField: "",
+      //new fieldname
+      newFieldName: "",
     };
 
     //bindings
@@ -59,6 +61,7 @@ class ImageCropField extends Component {
     this.handleAspectChange = this.handleAspectChange.bind(this);
     this.rotateTool = this.rotateTool.bind(this);
     this.handleEditFieldOnChange = this.handleEditFieldOnChange.bind(this);
+    this.handleFieldnameOnChange = this.handleFieldnameOnChange.bind(this);
   }
 
   /*
@@ -87,6 +90,25 @@ class ImageCropField extends Component {
   toggleModal() {
     //find the cropper
     let cropper = this.state.cropper;
+    let fieldName = document.getElementById("Form_fileEditForm_Name");
+    let dim = "";
+    //check to make sure it is not empty
+    if (document.getElementById("Form_fileEditForm_Name") !== null) {
+      fieldName = document.getElementById("Form_fileEditForm_Name").value;
+    } else {
+      fieldName = document.getElementById("Form_fileInsertForm_Name").value;
+    }
+
+    //make sure the cropper is set before attempting to grab the width and height
+    if (cropper !== null) {
+      dim =
+        this.state.cropper.getData()["width"].toFixed() +
+        "x" +
+        this.state.cropper.getData()["height"].toFixed();
+    }
+
+    //the field name of the image removing everything before the period
+    let newFieldName = "Cropped/" + fieldName.split(".")[0] + "_cropped_" + dim;
 
     this.setState({
       showModal: !this.state.showModal,
@@ -95,6 +117,7 @@ class ImageCropField extends Component {
       //set the button to none-saved state
       cropButtonClass: "font-icon-rocket",
       cropButtonColor: "primary",
+      newFieldName: newFieldName,
     });
   }
 
@@ -121,12 +144,10 @@ class ImageCropField extends Component {
   handleSave() {
     let form = document.getElementById("Form_fileEditForm");
     //#Form_fileEditForm_Name
-    let fieldName = document.getElementById("Form_fileEditForm_Name");
+    let fieldName = this.state.fieldName;
     //if the above form is empty, assume we are in the file insert form and atempt to get that
     if (form === null) {
       form = document.getElementById("Form_fileInsertForm");
-      //#Form_fileInsertForm_Name
-      fieldName = document.getElementById("Form_fileInsertForm_Name");
     }
     let formUrl = form.getAttribute("action");
     let self = this;
@@ -141,14 +162,12 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
 
-    //remove the period
-    fieldName = fieldName.value.substring(0, fieldName.value.indexOf("."));
+    //set the fieldname
+    fieldName = this.state.newFieldName;
 
     //the cropped image
     let data = {
       image: cropper.getCroppedCanvas().toDataURL(),
-      width: cropper.getData()["width"].toFixed(),
-      height: cropper.getData()["height"].toFixed(),
       name: fieldName,
     };
 
@@ -312,6 +331,18 @@ class ImageCropField extends Component {
   }
 
   /**
+   * handle when the edit field has been changed.
+   */
+  handleFieldnameOnChange(e) {
+    let data = e.target.value.replace(/[^a-zA-Z0-9\/_-]/, "");
+
+    //set the state
+    this.setState({
+      newFieldName: data,
+    });
+  }
+
+  /**
    * allows us to make simple post request
    */
   postAjax(url, data, success) {
@@ -367,6 +398,18 @@ class ImageCropField extends Component {
           </ModalHeader>
           <ModalBody>
             {AlertMessage}
+            <div class="image-crop-filename">
+              <Input
+                type="text"
+                value={this.state.newFieldName}
+                onChange={e => this.handleFieldnameOnChange(e)}
+              />
+              <span class="small">
+                Letters, numbers, slashes <strong>(/)</strong>, underscores{" "}
+                <strong>(_)</strong>, and dashes <strong>(-)</strong> are
+                allowed.
+              </span>
+            </div>
             <div class="image-crop-preview">
               <img src={this.state.preview} />
             </div>
