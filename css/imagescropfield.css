@@ -7,6 +7,7 @@
   border-top: 1px solid #ced5e1;
   border-left: 1px solid #ced5e1;
   border-right: 1px solid #ced5e1;
+  max-width: 542px;
 }
 
 .imagecrop-field .imagecrop-field-toolbar > span {
@@ -36,7 +37,16 @@
 
 .img-container {
   max-height: 500px;
-  max-width: 100%;
+  max-width: 542px;
+  min-height: 400px;
+}
+
+.img-container > img {
+  width: 100%;
+}
+
+.imagecrop-field .cropper-container {
+  width: 100% !important;
 }
 
 .crop-preview .modal-body .image-crop-preview {
@@ -70,6 +80,9 @@
 
 .imagecrop-field .imagecrop-field-aspect-ratio .dropdown {
   display: none;
+  -webkit-box-shadow: 7px 14px 5px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 7px 14px 5px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 7px 14px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
 .imagecrop-field .imagecrop-field-aspect-ratio:hover .dropdown {
@@ -127,6 +140,12 @@
 }
 
 @media (min-width: 1200px) {
+  .editor {
+    width: 600px !important;
+  }
+}
+
+@media (min-width: 992px) {
   .editor {
     width: 600px !important;
   }
