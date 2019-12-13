@@ -47,6 +47,9 @@ class ImageCropField extends Component {
       editFieldValue: "",
       //toogle edit field for aspect
       toggleEditField: "",
+      //the filename field
+      fileName: "",
+      inInsertPopUp: false,
       //new fieldname
       newFieldName: "",
     };
@@ -85,19 +88,26 @@ class ImageCropField extends Component {
     });
 
     this.setState({ cropper });
+
+    //get the field for the file name
+    let fName = document.getElementById("Form_fileEditForm_Name");
+    let inInsertPopUp = false;
+    if (document.getElementById("Form_fileEditForm_Name") === null) {
+      fName = document.getElementById("Form_fileInsertForm_Name");
+      inInsertPopUp = true;
+    }
+    //update the state
+    this.setState({
+      fileName: fName,
+      inInsertPopUp: inInsertPopUp,
+    });
   }
 
   toggleModal() {
     //find the cropper
     let cropper = this.state.cropper;
-    let fieldName = document.getElementById("Form_fileEditForm_Name");
+    let fieldName = this.state.fileName.value;
     let dim = "";
-    //check to make sure it is not empty
-    if (document.getElementById("Form_fileEditForm_Name") !== null) {
-      fieldName = document.getElementById("Form_fileEditForm_Name").value;
-    } else {
-      fieldName = document.getElementById("Form_fileInsertForm_Name").value;
-    }
 
     //make sure the cropper is set before attempting to grab the width and height
     if (cropper !== null) {
@@ -375,7 +385,9 @@ class ImageCropField extends Component {
    */
   render() {
     let AlertMessage = null;
-    if (this.state.showAlertMessage) {
+
+    //determine if the alert message should show and what it should show
+    if (this.state.showAlertMessage && this.state.inInsertPopUp === false) {
       //show the alert message
       AlertMessage = (
         <Alert color="success">
@@ -383,6 +395,11 @@ class ImageCropField extends Component {
           <a href={this.state.alertMessageLink}>here</a> to edit it.
         </Alert>
       );
+    } else if (
+      this.state.showAlertMessage &&
+      this.state.inInsertPopUp === true
+    ) {
+      AlertMessage = <Alert color="success">Your image has been saved.</Alert>;
     }
 
     return (
