@@ -31,24 +31,31 @@ Image Cropper Field has a wide array of tools that will help any CMS Admin crop 
 
 #Some of the tools:
 - cropper dimensions tool
+
 ![cropper dimensions tool](screenshots/Tool_1.jpg)
 
 - move tool
+
 ![move tool](screenshots/Tool_2.jpg)
 
 - cropper tool
+
 ![cropper tool](screenshots/Tool_3.jpg)
 
 - zoom tools
+
 ![zoom in](screenshots/Tool_4.jpg) ![zoom out](screenshots/Tool_5.jpg)
 
 - image rotating tools
+
 ![rotate left](screenshots/Tool_6.jpg) ![rotate right](screenshots/Tool_7.jpg)
 
 - reset tool
-![reset tool](screenshots/Tool_8jpg)
+
+![reset tool](screenshots/Tool_8.jpg)
 
 - aspect ratio setting tool
+
 ![reset tool](screenshots/Tool_9.jpg)
 
 Image Cropper Field will not overwrite the current image and instead creates a new image. The filename of the generated image is determined by the filename of the current image. The new image is saved into the `Cropped` folder by default. Both of these settings can be changed before you press the `Crop Image` button. 
@@ -77,9 +84,11 @@ For PHP errors, please ensure you include the full stack trace. Also, please inc
 
 ## FAQ
 Q: I can't find my image after creating it in the `file Insert Form`. Where is my new image?
+
 A: Your new image will be saved to the folder you selected or to the default folder `Cropped`. You will have to, currently, refresh the page and open the insert image window again to get the image to show up. 
 
 Q: How do I change the folder the image saves too?
+
 A: In the image below, we can see the image's new name will be `Cropped/b_cropped_512x384`. The slashes in the file name determine which folder the image will be saved too. We can see that it will save into the `Cropped` folder. 
 
 If we wanted to save it into a different folder, we simple change the `Cropped` like so `newFolder/b_cropped_512x384` this will now save it into a folder called `newFolder` in the root of the file system.
@@ -89,4 +98,5 @@ If we wanted to save it into `newFolder > subFolder` we simple have to type `new
 ![Overview of Image Cropper Field](screenshots/Capture_5.jpg)
 
 Q: Why are there `\` in the new filename field before I click `Crop Image`?
+
 A: 
