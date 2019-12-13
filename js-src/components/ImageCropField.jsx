@@ -405,8 +405,8 @@ class ImageCropField extends Component {
                 onChange={e => this.handleFieldnameOnChange(e)}
               />
               <span class="small">
-                Letters, numbers, slashes <strong>(/)</strong>, underscores{" "}
-                <strong>(_)</strong>, and dashes <strong>(-)</strong> are
+                Letters, numbers, slashes <strong>( / )</strong>, underscores{" "}
+                <strong>( _ )</strong>, and dashes <strong>( - )</strong> are
                 allowed.
               </span>
             </div>
