@@ -17,10 +17,9 @@ composer require webbuilders-group/silverstripe-image-crop-field
 
 - Run `dev/build?flush=all` to regenerate the manifest
 
-## Usage
+## Setup
 
-There is no need to configure anything. Once you have it install and have run `dev/build?flush=all`, you can begin
-cropping images right away from with-in the file section of the cms.
+There is nothing to configure. Once you install and run `dev/build?flush=all`, you can begin cropping images right away from with-in the file section of the CMS.
 
 ## Features and Overview
 Image Cropper Field has a wide array of tools that will help any CMS Admin crop their images and limit the need to use external tools like Photoshop.
@@ -29,7 +28,7 @@ Image Cropper Field has a wide array of tools that will help any CMS Admin crop 
 ![Overview of Image Cropper Field with aspect dropdown shown](screenshots/Capture_2.jpg)
 ![Overview of Image Cropper Field with dimension editing shown](screenshots/Capture_3.jpg)
 
-#Some of the tools:
+**The tools:**
 - cropper dimensions tool
 
 ![cropper dimensions tool](screenshots/Tool_1.jpg)
@@ -58,13 +57,13 @@ Image Cropper Field has a wide array of tools that will help any CMS Admin crop 
 
 ![reset tool](screenshots/Tool_9.jpg)
 
-Image Cropper Field will not overwrite the current image and instead creates a new image. The filename of the generated image is determined by the filename of the current image. The new image is saved into the `Cropped` folder by default. Both of these settings can be changed before you press the `Crop Image` button. 
+Image Cropper Field will not overwrite the current image and instead will create a new image. The filename of the new image is determined by the filename of the current image. The new image is saved into the `Cropped` folder by default. Both of these settings can be changed before you press the `Crop Image` button. 
 
-Note, the cropped image should be saved to a sub-folder. If no sub-folder is selected, it will default to the `Cropped` folder.
+Note, the cropped image should be saved to a sub-folder. If no sub-folder is set, it will default to the `Cropped` folder.
 
 ![Crop Preview window](screenshots/Capture_4.jpg)
 
-Once it has generated the new image, a green alert will be shown along with a link to your new image; However, this link will, currently, not be shown when you are using this field from the `file Insert Form`.
+Once it has created the new image, a green alert will be shown along with a link to your new image; However, this link will, currently, not be shown when you are using this field from the `file Insert Form`.
 
 ![Overview of Image Cropper Field](screenshots/Capture_5.jpg)
 
@@ -83,11 +82,11 @@ When you're reporting an issue, please ensure you specify what version of Silver
 For PHP errors, please ensure you include the full stack trace. Also, please include your implementation code as well as how you produced the issue. You may also be asked to provide some of the classes to aid in re-producing the issue. Stick with the issue, remember that you seen the issue not the maintainer of the module so it may take a lot of questions to arrive at a fix or answer.
 
 ## FAQ
-Q: I can't find my image after creating it in the `file Insert Form`. Where is my new image?
+**Q: I can't find my image after creating it in the `file Insert Form`. Where is my new image?**
 
-A: Your new image will be saved to the folder you selected or to the default folder `Cropped`. You will have to, currently, refresh the page and open the insert image window again to get the image to show up. 
+A: Your new image will be saved to the folder you selected or to the default folder `Cropped`. You will have to, currently, refresh the page and open the insert image window again to get the image to show up when cropping from the `file Insert Form`. 
 
-Q: How do I change the folder the image saves too?
+**Q: How do I change the folder the image saves too?**
 
 A: In the image below, we can see the image's new name will be `Cropped/b_cropped_512x384`. The slashes in the file name determine which folder the image will be saved too. We can see that it will save into the `Cropped` folder. 
 
@@ -97,6 +96,18 @@ If we wanted to save it into `newFolder > subFolder` we simple have to type `new
 
 ![Overview of Image Cropper Field](screenshots/Capture_5.jpg)
 
-Q: Why are there `\` in the new filename field before I click `Crop Image`?
+**Q: Why are there `/` in the new filename field before I click `Crop Image`?**
 
-A: 
+A: Anything before a `/` is considered a folder. Anything after the last slash is considered the image's new filename. 
+
+Given the example `test/test2/test3/image`, `image` would be the new name of the image and `test/test2/test3/` would be the folder structure for where the new image will be saved.
+
+**Q: You keep mentioning `file Insert Form`, where is this form? Do I use it?**
+
+A: The `file Insert Form` can be found when you interact with Files popup window, so either by clicking on the `insert from files` button on a WYSIWYG editor or by clicking the `browse` button on an upload field. The image below is the `file Insert Form` that is refered too.
+
+![Overview of Image Cropper Field](screenshots/Capture_7.jpg)
+
+**Q: Can I use this field on a page or a dataobject?**
+
+A: Currently this field is designed only to be used in the file system of the CMS and the `file Insert Form`. There are plans to allow this field to be used on pages/dataobjects, and it will most likely come in version 2. 
