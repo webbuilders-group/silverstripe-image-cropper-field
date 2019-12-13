@@ -31,25 +31,25 @@ Image Cropper Field has a wide array of tools that will help any CMS Admin crop 
 
 #Some of the tools:
 - cropper dimensions tool
-![cropper dimensions tool](screenshots/Tool_1.jpg.jpg)
+![cropper dimensions tool](screenshots/Tool_1.jpg)
 
 - move tool
-![move tool](screenshots/Tool_2.jpg.jpg)
+![move tool](screenshots/Tool_2.jpg)
 
 - cropper tool
-![cropper tool](screenshots/Tool_3.jpg.jpg)
+![cropper tool](screenshots/Tool_3.jpg)
 
 - zoom tools
-![zoom in](screenshots/Tool_4.jpg.jpg) ![zoom out](screenshots/Tool_5.jpg.jpg)
+![zoom in](screenshots/Tool_4.jpg) ![zoom out](screenshots/Tool_5.jpg)
 
 - image rotating tools
-![rotate left](screenshots/Tool_6.jpg.jpg) ![rotate right](screenshots/Tool_7.jpg.jpg)
+![rotate left](screenshots/Tool_6.jpg) ![rotate right](screenshots/Tool_7.jpg)
 
 - reset tool
-![reset tool](screenshots/Tool_8.jpg.jpg)
+![reset tool](screenshots/Tool_8jpg)
 
 - aspect ratio setting tool
-![reset tool](screenshots/Tool_9.jpg.jpg)
+![reset tool](screenshots/Tool_9.jpg)
 
 Image Cropper Field will not overwrite the current image and instead creates a new image. The filename of the generated image is determined by the filename of the current image. The new image is saved into the `Cropped` folder by default. Both of these settings can be changed before you press the `Crop Image` button. 
 
