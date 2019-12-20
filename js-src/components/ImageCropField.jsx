@@ -551,7 +551,7 @@ class ImageCropField extends Component {
           <ToolbarButton
             onClick={e => this.resetTool(e)}
             name="reset-tool"
-            datatip="Rest the crop area"
+            datatip="Reset the crop area"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -618,7 +618,7 @@ class ImageCropField extends Component {
           <ToolbarButton
             onClick={() => this.toggleModal()}
             name="savecropped-tool"
-            datatip="Save the cropped image to the Cropped folder"
+            datatip="Save new cropped image"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
