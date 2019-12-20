@@ -52,6 +52,8 @@ class ImageCropField extends Component {
       inInsertPopUp: false,
       //new fieldname
       newFieldName: "",
+      //determine if there is an error
+      error: false,
     };
 
     //bindings
@@ -191,12 +193,24 @@ class ImageCropField extends Component {
     this.postAjax(url, data, function(data) {
       let d = JSON.parse(data);
 
-      //close the modal and show the message
-      self.setState({
-        showAlertMessage: true,
-        alertMessageLink: d.link,
-        cropButtonClass: "font-icon-tick",
-      });
+      //check to see if there was an error
+      if (d.status === "complete") {
+        //close the modal and show the message
+        self.setState({
+          showAlertMessage: true,
+          alertMessageLink: d.link,
+          cropButtonClass: "font-icon-tick",
+        });
+      } else {
+        console.log(d.status);
+        //reset the button back
+        self.setState({
+          showAlertMessage: true,
+          cropButtonClass: "font-icon-crop",
+          cropButtonColor: "primary",
+          error: true,
+        });
+      }
     });
   }
 
@@ -388,7 +402,11 @@ class ImageCropField extends Component {
     let AlertMessage = null;
 
     //determine if the alert message should show and what it should show
-    if (this.state.showAlertMessage && this.state.inInsertPopUp === false) {
+    if (
+      this.state.showAlertMessage &&
+      this.state.inInsertPopUp === false &&
+      this.state.error === false
+    ) {
       //show the alert message
       AlertMessage = (
         <Alert color="success">
@@ -398,9 +416,16 @@ class ImageCropField extends Component {
       );
     } else if (
       this.state.showAlertMessage &&
-      this.state.inInsertPopUp === true
+      this.state.inInsertPopUp === true &&
+      this.state.error === false
     ) {
       AlertMessage = <Alert color="success">Your image has been saved.</Alert>;
+    } else if (this.state.showAlertMessage && this.state.error === true) {
+      AlertMessage = (
+        <Alert color="danger">
+          There has been an error, your image maybe too large.
+        </Alert>
+      );
     }
 
     return (

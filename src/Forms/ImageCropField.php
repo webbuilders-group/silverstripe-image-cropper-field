@@ -157,18 +157,25 @@ class ImageCropField extends FormField
             //get the image
             $data = $this->request->postVars();
 
-            //clean the image string
-            $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
-            //the actual image
-            $fileData = base64_decode($img);
+            if (in_array("image", $data)) {
+                //clean the image string
+                $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
+                //the actual image
+                $fileData = base64_decode($img);
 
-            //create the image in SilverStripe
-            $editLink = $this->createImage($fileData, $data['name']);
+                //create the image in SilverStripe
+                $editLink = $this->createImage($fileData, $data['name']);
 
-            $return = [
-                'status' => 'complete',
-                'link' => "" . $editLink,
-            ];
+                $return = [
+                    'status' => 'complete',
+                    'link' => "" . $editLink,
+                ];
+            } else {
+                $return = [
+                    'status' => 'error',
+                    'link' => "" . null,
+                ];
+            }
 
             //send back json
             return json_encode($return);
