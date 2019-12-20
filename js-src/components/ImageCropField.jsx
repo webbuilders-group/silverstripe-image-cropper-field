@@ -37,7 +37,7 @@ class ImageCropField extends Component {
       selectedWidth: null,
       selectedHeight: null,
       //the crop button settings
-      cropButtonClass: "font-icon-rocket",
+      cropButtonClass: "font-icon-crop",
       cropButtonColor: "primary",
       //this is the custom aspect ratio
       customAspectRatio: "",
@@ -126,7 +126,7 @@ class ImageCropField extends Component {
       preview: cropper.getCroppedCanvas().toDataURL(),
       showAlertMessage: null,
       //set the button to none-saved state
-      cropButtonClass: "font-icon-rocket",
+      cropButtonClass: "font-icon-crop",
       cropButtonColor: "primary",
       newFieldName: newFieldName,
     });

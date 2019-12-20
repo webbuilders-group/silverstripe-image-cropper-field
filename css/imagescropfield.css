@@ -165,3 +165,9 @@
     left: 0px;
   }
 }
+
+.font-icon-crop::before {
+  content: url(../images/crop-button.svg);
+  width: 16px;
+  height: 16px;
+}

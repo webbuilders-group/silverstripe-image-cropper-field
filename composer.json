@@ -25,7 +25,8 @@
     },
     "expose": [
       "css",
-      "javascript"
+      "javascript",
+      "images"
     ]
   },
   "support": {
