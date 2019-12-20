@@ -123,13 +123,14 @@ class ImageCropField extends FormField
         //remove a slash from the start
         $newTitle = ltrim($newTitle, '/');
 
-        //make sure the image is being added to a folder if not add it to cropped.
-        $addFolder = (strrpos($newTitle, '/') !== false) ? "" : "Cropped/";
+        //find the folder of the current image
+        $image = $this->data["image"];
+        $folder = $image->Parent()->getFilename() . "Cropped/";
 
         //create an image object
         $finalImage = Image::create();
         //use the record id and time to make the file name unique as the resampled images don't work otherwise
-        $finalImage->setFromString($imageData, $addFolder . $newTitle . ".jpg");
+        $finalImage->setFromString($imageData, $folder . $newTitle . ".jpg");
         //remove folder names frome title
         $tokens = explode('/', $newTitle);
         $newTitle = trim(end($tokens));

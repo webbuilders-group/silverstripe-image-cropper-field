@@ -119,7 +119,7 @@ class ImageCropField extends Component {
     }
 
     //the field name of the image removing everything before the period
-    let newFieldName = "Cropped/" + fieldName.split(".")[0] + "_cropped_" + dim;
+    let newFieldName = fieldName.split(".")[0] + "_cropped_" + dim;
 
     this.setState({
       showModal: !this.state.showModal,
@@ -345,7 +345,7 @@ class ImageCropField extends Component {
    * handle when the edit field has been changed.
    */
   handleFieldnameOnChange(e) {
-    let data = e.target.value.replace(/[^a-zA-Z0-9\/_-]/, "");
+    let data = e.target.value.replace(/[^a-zA-Z0-9_-]/, "");
 
     //set the state
     this.setState({
@@ -423,9 +423,8 @@ class ImageCropField extends Component {
                 onChange={e => this.handleFieldnameOnChange(e)}
               />
               <span class="small">
-                Letters, numbers, slashes <strong>( / )</strong>, underscores{" "}
-                <strong>( _ )</strong>, and dashes <strong>( - )</strong> are
-                allowed.
+                Letters, numbers, underscores <strong>( _ )</strong>, and dashes{" "}
+                <strong>( - )</strong> are allowed.
               </span>
             </div>
             <div class="image-crop-preview">
