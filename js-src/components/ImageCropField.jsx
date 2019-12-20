@@ -79,6 +79,7 @@ class ImageCropField extends Component {
       responsive: true,
       minContainerWidth: 542,
       minContainerHeight: 500,
+      viewMode: 2,
       crop(event) {
         self.setState({
           selectedWidth: event.detail.width.toFixed(),
