@@ -157,7 +157,9 @@ class ImageCropField extends FormField
             //get the image
             $data = $this->request->postVars();
 
-            if (in_array("image", $data)) {
+            var_dump($data);exit;
+
+            if (array_key_exists("image", $data)) {
                 //clean the image string
                 $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
                 //the actual image
