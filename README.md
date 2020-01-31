@@ -12,7 +12,7 @@ Adds the ability to crop images from within the SilverStripe file section.
 Installation is supported via composer only
 
 ```sh
-composer require webbuilders-group/silverstripe-image-crop-field
+composer require webbuilders-group/silverstripe-image-cropper-field
 ```
 
 - Run `dev/build?flush=all` to regenerate the manifest
