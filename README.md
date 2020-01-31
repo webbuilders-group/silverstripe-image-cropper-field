@@ -1,7 +1,7 @@
 Image Cropper Field
 =================
 
-Adds the ability to crop images from within the silverstripe file section.
+Adds the ability to crop images from within the SilverStripe file section.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ composer require webbuilders-group/silverstripe-image-crop-field
 
 ## Setup
 
-There is nothing to configure. Once you install and run `dev/build?flush=all`, you can begin cropping images right away from with-in the file section of the CMS.
+There is nothing to configure. Once you install and run `dev/build?flush=all`, you can begin cropping images right away from within the file section of the CMS.
 
 ## Features and Overview
 Image Cropper Field has a wide array of tools that will help any CMS Admin crop their images and limit the need to use external tools like Photoshop.
@@ -75,9 +75,9 @@ Once the link is clicked, you will be taken to your new image.
 
 ## Reporting an issue
 
-When you're reporting an issue, please ensure you specify what version of SilverStripe you are using i.e. 4.4.4. Also, be sure to include any JavaScript or PHP errors you receive. 
+When you are reporting an issue, please ensure you specify what version of SilverStripe you are using i.e. 4.4.4. Also, be sure to include any JavaScript or PHP errors you receive. 
 
-For PHP errors, please ensure you include the full stack trace. Also, please include your implementation code as well as how you produced the issue. You may also be asked to provide some of the classes to aid in re-producing the issue. Stick with the issue, remember that you seen the issue not the maintainer of the module so it may take a lot of questions to arrive at a fix or answer.
+For PHP errors, please ensure you include the full stack trace. Also, please include your implementation code as well as how you produced the issue. You may also be asked to provide some of the classes to aid in re-producing the issue. Stick with the issue, remember that it was you who saw the issue not the maintainer of the module so it may take a lot of questions to arrive at a fix or answer.
 
 ## FAQ
 **Q: I can't find my image after creating it in the `file Insert Form`. Where is my new image?**
