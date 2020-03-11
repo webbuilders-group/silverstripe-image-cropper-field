@@ -1,2 +1,5 @@
 js-src/ export-ignore
 screenshots/ export-ignore
+package.json/ export-ignore
+package-lock.json/ export-ignore
+webpack.config.js/ export-ignore
