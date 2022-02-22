@@ -18,7 +18,6 @@ use SilverStripe\ORM\DataObject;
  */
 class ImageCropField extends FormField
 {
-
     private static $allowed_actions = [
         'cropImage',
     ];
@@ -156,7 +155,6 @@ class ImageCropField extends FormField
     public function cropImage()
     {
         if (Director::is_ajax()) {
-
             //get the image
             $data = $this->request->postVars();
 
