@@ -129,8 +129,11 @@ class ImageCropField extends FormField
 
         //create an image object
         $finalImage = Image::create();
-        //use the record id and time to make the file name unique as the resampled images don't work otherwise
-        $finalImage->setFromString($imageData, $folder . $newTitle . ".jpg");
+
+        // file hash must be uniq
+        $hash = md5($imageData.time());
+        $finalImage->setFromString($imageData, $folder . $newTitle . ".jpg", $hash);
+
         //remove folder names frome title
         $tokens = explode('/', $newTitle);
         $newTitle = trim(end($tokens));
