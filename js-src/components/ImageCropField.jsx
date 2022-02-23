@@ -222,16 +222,21 @@ class ImageCropField extends Component {
         const newFileID = d.id;
 
 
-        // TODO: tircky way of updating parent Edit Form
+        // TODO: tricky way of updating parent Edit Form
         if (self.state.inInsertPopUp) {
           const editForm = document.getElementById('Form_ItemEditForm');
-          editForm.querySelectorAll('.uploadfield input').forEach((el) => {
-              if (el.value === oldFileID) {
-                el.value = d.id;
-                el.click();
-              }
-            });
 
+          editForm.querySelectorAll('.uploadfield').forEach((el) => {
+            const fileID = el.querySelector('input[type="hidden"]');
+            if (fileID && fileID.value === oldFileID) {
+              fileID.value = d.id;
+              el.querySelector('.uploadfield-item__thumbnail').style.backgroundImage = 'url(' + d.thumbnail + ')';
+              // TODO: tricky way of marking as changed
+              fileID.click();
+            }
+          });
+
+          // hide assets modal
           const modal = document.querySelector('.modal');
           modal.classList.remove('show');
           document.querySelector('.modal-backdrop').classList.remove('show');
