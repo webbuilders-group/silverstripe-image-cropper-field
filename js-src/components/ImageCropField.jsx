@@ -434,7 +434,7 @@ class ImageCropField extends Component {
     };
 
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
     xhr.send(params);
     return xhr;
   }
