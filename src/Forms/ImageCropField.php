@@ -144,7 +144,7 @@ class ImageCropField extends FormField
         AssetAdmin::create()->generateThumbnails($finalImage);
         $finalImage->publishSingle();
 
-        return $finalImage->CMSEditLink();
+        return $finalImage;
     }
 
     /**
@@ -165,9 +165,11 @@ class ImageCropField extends FormField
                 $fileData = base64_decode($img);
 
                 //create the image in SilverStripe
-                $editLink = $this->createImage($fileData, $data['name']);
+                $finalImage = $this->createImage($fileData, $data['name']);
+                $editLink = $finalImage->CMSEditLink();
 
                 $return = [
+                    'id' => $finalImage->ID,
                     'status' => 'complete',
                     'link' => "" . $editLink,
                 ];
