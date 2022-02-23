@@ -589,7 +589,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.rotateTool('-15')}
+            onClick={() => this.rotateTool('-90')}
             name="rotate-left-tool"
             datatip="Rotate the image left"
           >
@@ -603,7 +603,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.rotateTool('15')}
+            onClick={() => this.rotateTool('90')}
             name="rotate-right-tool"
             datatip="Rotate the image right"
           >
