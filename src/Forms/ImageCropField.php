@@ -141,8 +141,8 @@ class ImageCropField extends FormField
         $finalImage->write();
 
         //regenerate thumbnails and publish it
-        AssetAdmin::create()->generateThumbnails($finalImage);
         $finalImage->publishSingle();
+        AssetAdmin::create()->generateThumbnails($finalImage);
 
         return $finalImage;
     }
@@ -159,10 +159,11 @@ class ImageCropField extends FormField
             $data = $this->request->postVars();
 
             if (array_key_exists("image", $data)) {
-                //clean the image string
-                $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
-                //the actual image
-                $fileData = base64_decode($img);
+                // clean the image string
+                list($meta, $content) = explode(',', $data['image']);
+
+                // the actual image
+                $fileData = base64_decode($content);
 
                 //create the image in SilverStripe
                 $finalImage = $this->createImage($fileData, $data['name']);

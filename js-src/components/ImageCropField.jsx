@@ -125,7 +125,7 @@ class ImageCropField extends Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      preview: cropper.getCroppedCanvas().toDataURL(),
+      preview: cropper.getCroppedCanvas().toDataURL('image/jpeg'),
       showAlertMessage: null,
       //set the button to none-saved state
       cropButtonClass: 'font-icon-crop',
@@ -196,7 +196,7 @@ class ImageCropField extends Component {
 
     //the cropped image
     let data = {
-      image: cropper.getCroppedCanvas().toDataURL(),
+      image: cropper.getCroppedCanvas().toDataURL('image/jpeg'),
       name: fieldName,
     };
 
@@ -245,7 +245,7 @@ class ImageCropField extends Component {
             //form.submit();
           }
         } else {
-          console.error(d.status);
+          console.error(d);
           //reset the button back
           self.setState({
             showAlertMessage: true,
