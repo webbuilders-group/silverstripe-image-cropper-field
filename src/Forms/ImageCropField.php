@@ -130,7 +130,7 @@ class ImageCropField extends FormField
         $finalImage = Image::create();
 
         // file hash must be uniq
-        $hash = md5($imageData.time());
+        $hash = md5(time());
         $finalImage->setFromString($imageData, $folder . $newTitle . ".jpg", $hash);
 
         //remove folder names frome title
