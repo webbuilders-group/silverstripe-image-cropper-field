@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "axios": "^0.26.0",
     "css.escape": "^1.5.1",
     "react-tooltip": "^3.11.6"
   },
