@@ -172,7 +172,7 @@ class ImageCropField extends FormField
                     'id' => $finalImage->ID,
                     'status' => 'complete',
                     'link' => "" . $editLink,
-                    'thumbnail' => $finalImage->PreviewThumbnail()->Link(),
+                    'thumbnail' => $finalImage->PreviewLink(),
                 ];
             } else {
                 $return = [

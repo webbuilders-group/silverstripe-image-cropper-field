@@ -238,8 +238,8 @@ class ImageCropField extends Component {
 
           // hide assets modal
           const modal = document.querySelector('.modal');
-          modal.classList.remove('show');
-          document.querySelector('.modal-backdrop').classList.remove('show');
+          /*modal.classList.remove('show');
+          document.querySelector('.modal-backdrop').classList.remove('show');*/
           modal.parentElement.parentElement.style.display = 'none';
           //form.submit();
         }
