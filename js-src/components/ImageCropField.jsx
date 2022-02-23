@@ -218,8 +218,24 @@ class ImageCropField extends Component {
         });
 
         // replace old file with cropped
-        form.querySelector('[name="ID"]').value = d.id;
+        const oldFileID = form.querySelector('[name="ID"]').value;
+        const newFileID = d.id;
+
+
+        // TODO: tircky way of updating parent Edit Form
         if (self.state.inInsertPopUp) {
+          const editForm = document.getElementById('Form_ItemEditForm');
+          editForm.querySelectorAll('.uploadfield input').forEach((el) => {
+              if (el.value === oldFileID) {
+                el.value = d.id;
+                el.click();
+              }
+            });
+
+          const modal = document.querySelector('.modal');
+          modal.classList.remove('show');
+          document.querySelector('.modal-backdrop').classList.remove('show');
+          modal.parentElement.parentElement.style.display = 'none';
           //form.submit();
         }
       } else {
