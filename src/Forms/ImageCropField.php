@@ -18,7 +18,6 @@ use SilverStripe\ORM\DataObject;
  */
 class ImageCropField extends FormField
 {
-
     private static $allowed_actions = [
         'cropImage',
     ];
@@ -40,7 +39,7 @@ class ImageCropField extends FormField
      */
     public function __construct($data, $title, $image)
     {
-        //used for saving back to the parent object and referencing db fields
+        // used for saving back to the parent object and referencing db fields
         $this->data = [
             'data' => $data,
             'title' => $title,
@@ -50,12 +49,12 @@ class ImageCropField extends FormField
         parent::__construct($this->getName(), $title);
     }
 
-    // Auto generate a name
+    //  Auto generate a name
     public function getName()
     {
         return sprintf(
             '%s',
-            $this->data["title"]
+            $this->data['title']
         );
     }
 
@@ -76,17 +75,17 @@ class ImageCropField extends FormField
      */
     public function getImage()
     {
-        return $this->data["image"];
+        return $this->data['image'];
     }
 
     public function getSchemaStateDefaults()
     {
         $state = parent::getSchemaStateDefaults();
 
-        //check to see if there is an image and set the data
-        if ($this->data["image"]) {
-            //the image
-            $image = $this->data["image"];
+        // check to see if there is an image and set the data
+        if ($this->data['image']) {
+            // the image
+            $image = $this->data['image'];
             $state['data'] += [
                 'image' => $image->URL,
                 'name' => $this->getName(),
@@ -113,36 +112,35 @@ class ImageCropField extends FormField
      */
     public function createImage($imageData, $name)
     {
-        //the new tilte/filename
-        $newTitle = $name;
+        // clean the strings
+        $newTitle = ltrim(str_replace(['.', '\\'], ['', '/'], $name), '/');
 
-        //clean the strings
-        $newTitle = str_replace('.', '', $newTitle);
-        $newTitle = str_replace('\\', '/', $newTitle);
+        // find the folder of the current image
+        $image = $this->data['image'];
+        $parent = $image->Parent()->getFilename();
+        $folder = strpos($parent, 'Cropped') !== false
+            ? $parent
+            : $parent . 'Cropped/';
 
-        //remove a slash from the start
-        $newTitle = ltrim($newTitle, '/');
-
-        //find the folder of the current image
-        $image = $this->data["image"];
-        $folder = $image->Parent()->getFilename() . "Cropped/";
-
-        //create an image object
+        // create an image object
         $finalImage = Image::create();
-        //use the record id and time to make the file name unique as the resampled images don't work otherwise
-        $finalImage->setFromString($imageData, $folder . $newTitle . ".jpg");
-        //remove folder names frome title
+
+        //  file hash must be uniq
+        $hash = md5(time());
+        $finalImage->setFromString($imageData, $folder . $newTitle . '.jpg', $hash);
+
+        // remove folder names frome title
         $tokens = explode('/', $newTitle);
         $newTitle = trim(end($tokens));
-        //set the title
+        // set the title
         $finalImage->Title = $newTitle;
         $finalImage->write();
 
-        //regenerate thumbnails and publish it
-        AssetAdmin::create()->generateThumbnails($finalImage);
+        // regenerate thumbnails and publish it
         $finalImage->publishSingle();
+        AssetAdmin::create()->generateThumbnails($finalImage);
 
-        return $finalImage->CMSEditLink();
+        return $finalImage;
     }
 
     /**
@@ -152,36 +150,36 @@ class ImageCropField extends FormField
      */
     public function cropImage()
     {
-        if (Director::is_ajax()) {
-
-            //get the image
-            $data = $this->request->postVars();
-
-            if (array_key_exists("image", $data)) {
-                //clean the image string
-                $img = str_replace(' ', '+', str_replace('data:image/png;base64,', '', $data['image']));
-                //the actual image
-                $fileData = base64_decode($img);
-
-                //create the image in SilverStripe
-                $editLink = $this->createImage($fileData, $data['name']);
-
-                $return = [
-                    'status' => 'complete',
-                    'link' => "" . $editLink,
-                ];
-            } else {
-                $return = [
-                    'status' => 'error',
-                    'link' => "" . null,
-                ];
-            }
-
-            //send back json
-            return json_encode($return);
-        } else {
-            //return as this shouldn't be hit otherwise
+        if (!Director::is_ajax()) {
+            // return as this shouldn't be hit otherwise
             return $this->redirectBack();
         }
+
+        // get the image
+        $data = $this->request->postVars();
+
+        if (!array_key_exists('image', $data)) {
+            return json_encode([
+                'status' => 'error',
+                'link' => '' . null,
+            ]);
+        }
+
+        //  clean the image string
+        list($meta, $content) = explode(',', $data['image']);
+
+        //  the actual image
+        $fileData = base64_decode($content);
+
+        // create the image in SilverStripe
+        $finalImage = $this->createImage($fileData, $data['name']);
+        $editLink = $finalImage->CMSEditLink();
+
+        return json_encode([
+            'id' => $finalImage->ID,
+            'status' => 'complete',
+            'link' => '' . $editLink,
+            'thumbnail' => $finalImage->PreviewLink(),
+        ]);
     }
 }

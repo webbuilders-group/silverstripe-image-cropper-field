@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import Dimensions from "./Dimensions.jsx";
-import AspectRatio from "./AspectRatio.jsx";
-import AspectRatioButton from "./AspectRatioButton.jsx";
-import ToolbarButton from "./ToolbarButton.jsx";
-import Cropper from "../assets/cropper.min.js";
-import ReactTooltip from "react-tooltip";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import Dimensions from './Dimensions.jsx';
+import AspectRatio from './AspectRatio.jsx';
+import AspectRatioButton from './AspectRatioButton.jsx';
+import ToolbarButton from './ToolbarButton.jsx';
+import Cropper from '../assets/cropper.min.js';
+import axios from 'axios';
+import ReactTooltip from 'react-tooltip';
 import {
   Button,
   Input,
@@ -16,7 +17,7 @@ import {
   ModalBody,
   ModalFooter,
   Alert,
-} from "reactstrap";
+} from 'reactstrap';
 
 class ImageCropField extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class ImageCropField extends Component {
       cropper: null,
       activeButton: {
         moveTool: null,
-        selectionTool: "active",
+        selectionTool: 'active',
       },
       cropper: null,
       showModal: false,
@@ -37,21 +38,21 @@ class ImageCropField extends Component {
       selectedWidth: null,
       selectedHeight: null,
       //the crop button settings
-      cropButtonClass: "font-icon-crop",
-      cropButtonColor: "primary",
+      cropButtonClass: 'font-icon-crop',
+      cropButtonColor: 'primary',
       //this is the custom aspect ratio
-      customAspectRatio: "",
+      customAspectRatio: '',
       //use to determin which aspect ratio button to highlight
-      selectedAspect: "free",
+      selectedAspect: 'free',
       //the edit field value
-      editFieldValue: "",
+      editFieldValue: '',
       //toogle edit field for aspect
-      toggleEditField: "",
+      toggleEditField: '',
       //the filename field
-      fileName: "",
+      fileName: '',
       inInsertPopUp: false,
       //new fieldname
-      newFieldName: "",
+      newFieldName: '',
       //determine if there is an error
       error: false,
     };
@@ -93,12 +94,11 @@ class ImageCropField extends Component {
     this.setState({ cropper });
 
     //get the field for the file name
-    let fName = document.getElementById("Form_fileEditForm_Name");
-    let inInsertPopUp = false;
-    if (document.getElementById("Form_fileEditForm_Name") === null) {
-      fName = document.getElementById("Form_fileInsertForm_Name");
-      inInsertPopUp = true;
-    }
+    const form = this.getCurrentForm();
+
+    const fName = form.querySelector('[name="Name"]');
+    const inInsertPopUp = !!form.closest('.modal');
+
     //update the state
     this.setState({
       fileName: fName,
@@ -110,44 +110,63 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
     let fieldName = this.state.fileName.value;
-    let dim = "";
+    let dim = '';
 
     //make sure the cropper is set before attempting to grab the width and height
     if (cropper !== null) {
       dim =
-        this.state.cropper.getData()["width"].toFixed() +
-        "x" +
-        this.state.cropper.getData()["height"].toFixed();
+        this.state.cropper.getData()['width'].toFixed() +
+        'x' +
+        this.state.cropper.getData()['height'].toFixed();
     }
 
     //the field name of the image removing everything before the period
-    let newFieldName = fieldName.split(".")[0] + "_cropped_" + dim;
+    let newFieldName = fieldName.split('.')[0] + '_cropped_' + dim;
 
     this.setState({
       showModal: !this.state.showModal,
-      preview: cropper.getCroppedCanvas().toDataURL(),
+      preview: cropper.getCroppedCanvas().toDataURL('image/jpeg'),
       showAlertMessage: null,
       //set the button to none-saved state
-      cropButtonClass: "font-icon-crop",
-      cropButtonColor: "primary",
+      cropButtonClass: 'font-icon-crop',
+      cropButtonColor: 'primary',
       newFieldName: newFieldName,
     });
+  }
+
+  getCurrentForm() {
+    const fileFormNames = [
+        'Form_fileSelectForm',
+        'Form_fileEditForm',
+        'Form_fileInsertForm',
+    ];
+
+    let form;
+    fileFormNames.forEach((k) => {
+        const el = document.getElementById(k);
+        if (el) {
+          form = el;
+          return;
+        }
+      });
+
+    return form;
   }
 
   /**
    * Toggle the edit field for edting the the croppers width and height
    */
   toggleEditField() {
-    let state = "";
+    let state = '';
     //determine if it is closed and set to open
-    if (this.state.toggleEditField === "") {
-      state = "show";
+    if (this.state.toggleEditField === '') {
+      state = 'show';
     }
     //set the state
     this.setState({
       toggleEditField: state,
       editFieldValue:
-        this.state.selectedWidth + "x" + this.state.selectedHeight,
+        this.state.selectedWidth + 'x' + this.state.selectedHeight,
     });
   }
 
@@ -155,22 +174,19 @@ class ImageCropField extends Component {
    * handle saving the cropped image
    */
   handleSave() {
-    let form = document.getElementById("Form_fileEditForm");
+    const form = this.getCurrentForm();
     //#Form_fileEditForm_Name
     let fieldName = this.state.fieldName;
-    //if the above form is empty, assume we are in the file insert form and atempt to get that
-    if (form === null) {
-      form = document.getElementById("Form_fileInsertForm");
-    }
-    let formUrl = form.getAttribute("action");
+
+    let formUrl = form.getAttribute('action');
     let self = this;
     let url =
       encodeURI(formUrl) +
-      "/field/" +
+      'field/' +
       ReactDOM.findDOMNode(this.refs.image)
-        .closest(".imagecrop-field")
-        .getAttribute("name") +
-      "/cropImage";
+        .closest('.imagecrop-field')
+        .getAttribute('name') +
+      '/cropImage';
 
     //find the cropper
     let cropper = this.state.cropper;
@@ -180,38 +196,65 @@ class ImageCropField extends Component {
 
     //the cropped image
     let data = {
-      image: cropper.getCroppedCanvas().toDataURL(),
+      image: cropper.getCroppedCanvas().toDataURL('image/jpeg'),
       name: fieldName,
     };
 
     this.setState({
-      cropButtonClass: "font-icon-dot-3",
-      cropButtonColor: "outline-primary",
+      cropButtonClass: 'font-icon-dot-3',
+      cropButtonColor: 'outline-primary',
     });
 
     //send the data to be processed
-    this.postAjax(url, data, function(data) {
-      let d = JSON.parse(data);
+    this.postAjax(url, data, function (resp) {
+        let d = resp.data;
 
-      //check to see if there was an error
-      if (d.status === "complete") {
-        //close the modal and show the message
-        self.setState({
-          showAlertMessage: true,
-          alertMessageLink: d.link,
-          cropButtonClass: "font-icon-tick",
-        });
-      } else {
-        console.log(d.status);
-        //reset the button back
-        self.setState({
-          showAlertMessage: true,
-          cropButtonClass: "font-icon-crop",
-          cropButtonColor: "primary",
-          error: true,
-        });
-      }
-    });
+        //check to see if there was an error
+        if (d.status === 'complete') {
+          //close the modal and show the message
+          self.setState({
+            showAlertMessage: true,
+            alertMessageLink: d.link,
+            cropButtonClass: 'font-icon-tick',
+          });
+
+          // replace old file with cropped
+          const oldFileID = form.querySelector('[name="ID"]').value;
+          const newFileID = d.id;
+
+
+          // TODO: tricky way of updating parent Edit Form
+          if (self.state.inInsertPopUp) {
+            const editForm = document.getElementById('Form_ItemEditForm');
+
+            editForm.querySelectorAll('.uploadfield').forEach((el) => {
+              const fileID = el.querySelector('input[type="hidden"]');
+              if (fileID && fileID.value === oldFileID) {
+                fileID.value = d.id;
+                el.querySelector('.uploadfield-item__thumbnail').style.backgroundImage = 'url(' + d.thumbnail + ')';
+                // TODO: tricky way of marking as changed
+                fileID.click();
+              }
+            });
+
+            // hide assets modal
+            const modal = document.querySelector('.modal');
+            /*modal.classList.remove('show');
+            document.querySelector('.modal-backdrop').classList.remove('show');*/
+            modal.parentElement.parentElement.style.display = 'none';
+            //form.submit();
+          }
+        } else {
+          console.error(d);
+          //reset the button back
+          self.setState({
+            showAlertMessage: true,
+            cropButtonClass: 'font-icon-crop',
+            cropButtonColor: 'primary',
+            error: true,
+          });
+        }
+      });
   }
 
   /**
@@ -221,10 +264,10 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
     //trigger the move tool
-    cropper.setDragMode("move");
+    cropper.setDragMode('move');
     //reset active buttons
     this.clearActiveButtons();
-    this.setActiveButton("moveTool");
+    this.setActiveButton('moveTool');
   }
 
   /**
@@ -234,10 +277,10 @@ class ImageCropField extends Component {
     //find the cropper
     let cropper = this.state.cropper;
     //trigger the crop/selection tool
-    cropper.setDragMode("crop");
+    cropper.setDragMode('crop');
     //reset active buttons
     this.clearActiveButtons();
-    this.setActiveButton("selectionTool");
+    this.setActiveButton('selectionTool');
   }
 
   /**
@@ -249,10 +292,10 @@ class ImageCropField extends Component {
     //reset
     cropper.reset();
     //set the aspect ratio to none
-    this.setAspectRatio(NaN, true, "free");
+    this.setAspectRatio(NaN, true, 'free');
     //close the edit
     this.setState({
-      toggleEditField: "",
+      toggleEditField: '',
     });
   }
 
@@ -285,6 +328,7 @@ class ImageCropField extends Component {
     for (let [key, value] of Object.entries(buttons)) {
       buttons[key] = null;
     }
+
     this.setState({ buttons });
   }
 
@@ -294,7 +338,7 @@ class ImageCropField extends Component {
   setActiveButton(act) {
     //set the button active
     let button = this.state.activeButton;
-    button[act] = "active";
+    button[act] = 'active';
     this.setState({ button });
   }
 
@@ -305,7 +349,7 @@ class ImageCropField extends Component {
     //clear the customAspectRatio state if clear custom is set to true
     if (clearCustom) {
       this.setState({
-        customAspectRatio: "",
+        customAspectRatio: '',
       });
     }
 
@@ -328,9 +372,9 @@ class ImageCropField extends Component {
 
     //handle aspect change
     let requestedAR = e.target.value;
-    let newData = requestedAR.split(":");
+    let newData = requestedAR.split(':');
     //set the aspect ratio
-    this.setAspectRatio(newData[0] / newData[1], false, "custom");
+    this.setAspectRatio(newData[0] / newData[1], false, 'custom');
   }
 
   /**
@@ -346,7 +390,7 @@ class ImageCropField extends Component {
     });
 
     //get the new data
-    let newData = e.target.value.split("x");
+    let newData = e.target.value.split('x');
 
     //set the cropper field
     cropper.setData({
@@ -359,7 +403,7 @@ class ImageCropField extends Component {
    * handle when the edit field has been changed.
    */
   handleFieldnameOnChange(e) {
-    let data = e.target.value.replace(/[^a-zA-Z0-9_-]/, "");
+    let data = e.target.value.replace(/[^a-zA-Z0-9_-]/, '');
 
     //set the state
     this.setState({
@@ -371,28 +415,28 @@ class ImageCropField extends Component {
    * allows us to make simple post request
    */
   postAjax(url, data, success) {
-    var params =
-      typeof data == "string"
-        ? data
-        : Object.keys(data)
-            .map(function(k) {
-              return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-            })
-            .join("&");
+    const fd = new FormData();
+    fd.append('image', data['image']);
+    fd.append('name', data['name']);
+    console.log(fd);
+    const post = axios({
+        url: url + '?ajax=1',
+        method: 'POST',
+        data: fd,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+    .then((res) => {
+        success(res);
+      })
+    .catch((err) => {
+        console.error(err);
+        success(err);
+      });
 
-    var xhr = window.XMLHttpRequest
-      ? new XMLHttpRequest()
-      : new ActiveXObject("Microsoft.XMLHTTP");
-    xhr.open("POST", url);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState > 3 && xhr.status == 200) {
-        success(xhr.responseText);
-      }
-    };
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(params);
-    return xhr;
+    return post;
   }
 
   /**
@@ -410,7 +454,7 @@ class ImageCropField extends Component {
       //show the alert message
       AlertMessage = (
         <Alert color="success">
-          Your image has been saved. Click{" "}
+          Your image has been saved. Click{' '}
           <a href={this.state.alertMessageLink}>here</a> to edit it.
         </Alert>
       );
@@ -448,7 +492,7 @@ class ImageCropField extends Component {
                 onChange={e => this.handleFieldnameOnChange(e)}
               />
               <span class="small">
-                Letters, numbers, underscores <strong>( _ )</strong>, and dashes{" "}
+                Letters, numbers, underscores <strong>( _ )</strong>, and dashes{' '}
                 <strong>( - )</strong> are allowed.
               </span>
             </div>
@@ -517,7 +561,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.zoomTool("0.1")}
+            onClick={() => this.zoomTool('0.1')}
             name="zoomin-tool"
             datatip="Zoom in"
           >
@@ -531,7 +575,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.zoomTool("-0.1")}
+            onClick={() => this.zoomTool('-0.1')}
             name="zoomout-tool"
             datatip="Zoom out"
           >
@@ -545,7 +589,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.rotateTool("-15")}
+            onClick={() => this.rotateTool('-90')}
             name="rotate-left-tool"
             datatip="Rotate the image left"
           >
@@ -559,7 +603,7 @@ class ImageCropField extends Component {
             </svg>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => this.rotateTool("15")}
+            onClick={() => this.rotateTool('90')}
             name="rotate-right-tool"
             datatip="Rotate the image right"
           >
@@ -588,7 +632,7 @@ class ImageCropField extends Component {
           </ToolbarButton>
           <AspectRatio>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(16 / 9, true, "16by9")}
+              onClick={e => this.setAspectRatio(16 / 9, true, '16by9')}
               dataTip="Set the aspect ratio to 16 by 9"
               extraClasses={this.state.selectedAspect}
               name="16by9"
@@ -596,7 +640,7 @@ class ImageCropField extends Component {
               16:9
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(4 / 3, true, "4by3")}
+              onClick={e => this.setAspectRatio(4 / 3, true, '4by3')}
               dataTip="Set the aspect ratio to 4 by 3"
               extraClasses={this.state.selectedAspect}
               name="4by3"
@@ -604,7 +648,7 @@ class ImageCropField extends Component {
               4:3
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(1 / 1, true, "1by1")}
+              onClick={e => this.setAspectRatio(1 / 1, true, '1by1')}
               dataTip="Set the aspect ratio to 1 by 1"
               extraClasses={this.state.selectedAspect}
               name="1by1"
@@ -612,7 +656,7 @@ class ImageCropField extends Component {
               1:1
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(2 / 3, true, "2by3")}
+              onClick={e => this.setAspectRatio(2 / 3, true, '2by3')}
               dataTip="Set the aspect ratio to 2 by 3"
               extraClasses={this.state.selectedAspect}
               name="2by3"
@@ -620,7 +664,7 @@ class ImageCropField extends Component {
               2:3
             </AspectRatioButton>
             <AspectRatioButton
-              onClick={e => this.setAspectRatio(NaN, true, "free")}
+              onClick={e => this.setAspectRatio(NaN, true, 'free')}
               dataTip="Set the aspect ratio to free mode"
               extraClasses={this.state.selectedAspect}
               name="free"
