@@ -17,12 +17,9 @@
     }
   ],
   "require": {
-    "silverstripe/framework": "~4.4"
+    "silverstripe/framework": "~4.4|~5.0"
   },
   "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    },
     "expose": [
       "css",
       "javascript",
@@ -30,7 +27,7 @@
     ]
   },
   "support": {
-    "issues": "https://github.com/webbuilders-group/silverstripe-frontendgridfield/issues"
+    "issues": "https://github.com/webbuilders-group/silverstripe-image-cropper-field/issues"
   },
   "autoload": {
     "psr-4": {
