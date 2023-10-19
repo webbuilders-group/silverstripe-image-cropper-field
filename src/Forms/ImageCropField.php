@@ -6,7 +6,6 @@ use SilverStripe\AssetAdmin\Controller\AssetAdmin;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Director;
 use SilverStripe\Forms\FormField;
-use SilverStripe\ORM\DataObject;
 
 /**
  * An Image Selection Field that allows the user to select a section of the image

@@ -8,7 +8,7 @@ import AspectRatioButton from './AspectRatioButton.jsx';
 import ToolbarButton from './ToolbarButton.jsx';
 import Cropper from '../assets/cropper.min.js';
 import axios from 'axios';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from 'react-tooltip';
 import {
   Button,
   Input,
@@ -182,7 +182,7 @@ class ImageCropField extends Component {
     let self = this;
     let url =
       encodeURI(formUrl) +
-      'field/' +
+      '/field/' +
       ReactDOM.findDOMNode(this.refs.image)
         .closest('.imagecrop-field')
         .getAttribute('name') +
@@ -418,7 +418,6 @@ class ImageCropField extends Component {
     const fd = new FormData();
     fd.append('image', data['image']);
     fd.append('name', data['name']);
-    console.log(fd);
     const post = axios({
         url: url + '?ajax=1',
         method: 'POST',
@@ -474,7 +473,7 @@ class ImageCropField extends Component {
 
     return (
       <div class="imagecrop-field" name={this.props.data.name}>
-        <ReactTooltip />
+        <Tooltip />
         <Modal
           isOpen={this.state.showModal}
           toggle={() => this.toggleModal()}
