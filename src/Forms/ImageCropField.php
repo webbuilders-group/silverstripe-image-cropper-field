@@ -117,9 +117,7 @@ class ImageCropField extends FormField
         // find the folder of the current image
         $image = $this->data['image'];
         $parent = $image->Parent()->getFilename();
-        $folder = strpos($parent, 'Cropped') !== false
-            ? $parent
-            : $parent . 'Cropped/';
+        $folder = strpos($parent, 'Cropped') !== false ? $parent : $parent . 'Cropped/';
 
 
         // create an image object
