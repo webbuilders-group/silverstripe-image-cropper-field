@@ -121,12 +121,11 @@ class ImageCropField extends FormField
             ? $parent
             : $parent . 'Cropped/';
 
+
         // create an image object
         $finalImage = Image::create();
 
-        //  file hash must be uniq
-        $hash = md5(time());
-        $finalImage->setFromString($imageData, $folder . $newTitle . '.jpg', $hash);
+        $finalImage->setFromString($imageData, $folder . $newTitle . '.jpg');
 
         // remove folder names frome title
         $tokens = explode('/', $newTitle);
