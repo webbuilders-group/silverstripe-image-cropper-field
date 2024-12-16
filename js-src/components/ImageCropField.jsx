@@ -95,9 +95,16 @@ class ImageCropField extends Component {
 
     //get the field for the file name
     const form = this.getCurrentForm();
-
-    const fName = form.querySelector('[name="Name"]');
     const inInsertPopUp = !!form.closest('.modal');
+
+    let fName = form.querySelector('[name="Name"]');
+
+    // if we can't find it, fallback
+    if (fName === null || fName === undefined) {
+      fName = form.querySelector('.editor__file-preview-link');
+      fName = fName.getAttribute('href').split('/').pop();
+      fName = fName.split('?')[0];
+    }
 
     //update the state
     this.setState({
@@ -109,7 +116,7 @@ class ImageCropField extends Component {
   toggleModal() {
     //find the cropper
     let cropper = this.state.cropper;
-    let fieldName = this.state.fileName.value;
+    let fieldName = this.state.fileName.value ? this.state.fileName.value : this.state.fileName;
     let dim = '';
 
     //make sure the cropper is set before attempting to grab the width and height
