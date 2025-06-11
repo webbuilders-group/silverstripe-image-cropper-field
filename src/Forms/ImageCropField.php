@@ -49,7 +49,7 @@ class ImageCropField extends FormField
     }
 
     //  Auto generate a name
-    public function getName()
+    public function getName(): string
     {
         return sprintf(
             '%s',
@@ -169,7 +169,7 @@ class ImageCropField extends FormField
 
         // create the image in SilverStripe
         $finalImage = $this->createImage($fileData, $data['name']);
-        $editLink = $finalImage->CMSEditLink();
+        $editLink = $finalImage->getCMSEditLink();
 
         return json_encode([
             'id' => $finalImage->ID,
