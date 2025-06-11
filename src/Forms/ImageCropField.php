@@ -169,7 +169,7 @@ class ImageCropField extends FormField
 
         // create the image in SilverStripe
         $finalImage = $this->createImage($fileData, $data['name']);
-        $editLink = $finalImage->getCMSEditLink();
+        $editLink = ($finalImage->hasMethod('getCMSEditLink') ? $finalImage->getCMSEditLink() : $finalImage->CMSEditLink());
 
         return json_encode([
             'id' => $finalImage->ID,
