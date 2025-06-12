@@ -11,20 +11,20 @@
     "@babel/core": "^7.22.1",
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-react": "^7.22.3",
-    "babel-loader": "^9.1.2",
+    "babel-loader": "^10.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^5.0.7",
     "redux": "^4.2.1",
     "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^6.0.1"
   },
   "bin": {
     "webpack": "./node_modules/webpack/bin/webpack.js"
   },
   "engines": {
-    "node": "^18.0.0",
-    "npm": "^9.0.0"
+    "node": "^22.0.0",
+    "npm": "^10.0.0"
   },
   "scripts": {
     "build": "webpack --mode=\"production\" --bail",
