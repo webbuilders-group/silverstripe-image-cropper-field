@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Dimensions from './Dimensions.jsx';
 import AspectRatio from './AspectRatio.jsx';
 import AspectRatioButton from './AspectRatioButton.jsx';
 import ToolbarButton from './ToolbarButton.jsx';
 import Cropper from '../assets/cropper.min.js';
-import axios from 'axios';
 import Tooltip from 'react-tooltip';
 import {
   Button,
@@ -213,55 +210,53 @@ class ImageCropField extends Component {
     });
 
     //send the data to be processed
-    this.postAjax(url, data, function (resp) {
-        let d = resp.data;
+    this.postAjax(url, data, (d) => {
+      //check to see if there was an error
+      if (d.status === 'complete') {
+        //close the modal and show the message
+        self.setState({
+          showAlertMessage: true,
+          alertMessageLink: d.link,
+          cropButtonClass: 'font-icon-tick',
+        });
 
-        //check to see if there was an error
-        if (d.status === 'complete') {
-          //close the modal and show the message
-          self.setState({
-            showAlertMessage: true,
-            alertMessageLink: d.link,
-            cropButtonClass: 'font-icon-tick',
+        // replace old file with cropped
+        const oldFileID = form.querySelector('[name="ID"]').value;
+        const newFileID = d.id;
+
+
+        // TODO: tricky way of updating parent Edit Form
+        if (self.state.inInsertPopUp) {
+          const editForm = document.getElementById('Form_ItemEditForm');
+
+          editForm.querySelectorAll('.uploadfield').forEach((el) => {
+            const fileID = el.querySelector('input[type="hidden"]');
+            if (fileID && fileID.value === oldFileID) {
+              fileID.value = d.id;
+              el.querySelector('.uploadfield-item__thumbnail').style.backgroundImage = 'url(' + d.thumbnail + ')';
+              // TODO: tricky way of marking as changed
+              fileID.click();
+            }
           });
 
-          // replace old file with cropped
-          const oldFileID = form.querySelector('[name="ID"]').value;
-          const newFileID = d.id;
-
-
-          // TODO: tricky way of updating parent Edit Form
-          if (self.state.inInsertPopUp) {
-            const editForm = document.getElementById('Form_ItemEditForm');
-
-            editForm.querySelectorAll('.uploadfield').forEach((el) => {
-              const fileID = el.querySelector('input[type="hidden"]');
-              if (fileID && fileID.value === oldFileID) {
-                fileID.value = d.id;
-                el.querySelector('.uploadfield-item__thumbnail').style.backgroundImage = 'url(' + d.thumbnail + ')';
-                // TODO: tricky way of marking as changed
-                fileID.click();
-              }
-            });
-
-            // hide assets modal
-            const modal = document.querySelector('.modal');
-            /*modal.classList.remove('show');
-            document.querySelector('.modal-backdrop').classList.remove('show');*/
-            modal.parentElement.parentElement.style.display = 'none';
-            //form.submit();
-          }
-        } else {
-          console.error(d);
-          //reset the button back
-          self.setState({
-            showAlertMessage: true,
-            cropButtonClass: 'font-icon-crop',
-            cropButtonColor: 'primary',
-            error: true,
-          });
+          // hide assets modal
+          const modal = document.querySelector('.modal');
+          /*modal.classList.remove('show');
+          document.querySelector('.modal-backdrop').classList.remove('show');*/
+          modal.parentElement.parentElement.style.display = 'none';
+          //form.submit();
         }
-      });
+      } else {
+        console.error(d);
+        //reset the button back
+        self.setState({
+          showAlertMessage: true,
+          cropButtonClass: 'font-icon-crop',
+          cropButtonColor: 'primary',
+          error: true,
+        });
+      }
+    });
   }
 
   /**
@@ -425,22 +420,26 @@ class ImageCropField extends Component {
     const fd = new FormData();
     fd.append('image', data['image']);
     fd.append('name', data['name']);
-    const post = axios({
-        url: url + '?ajax=1',
+    const post = fetch(
+      url + '?ajax=1',
+      {
         method: 'POST',
-        data: fd,
+        body: fd,
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'multipart/form-data',
         },
-      })
+      },
+    )
     .then((res) => {
-        success(res);
-      })
+        return res.json();
+    })
+    .then((data) => {
+      success(data);
+    })
     .catch((err) => {
         console.error(err);
         success(err);
-      });
+    });
 
     return post;
   }

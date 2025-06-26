@@ -107,7 +107,7 @@ class ImageCropField extends FormField
      * Will attepmt to create the image in ss, regenerate thumbnails, and publish it.
      *
      * @param [image stream] $imageData
-     * @return void
+     * @return Image
      */
     public function createImage($imageData, $name)
     {
@@ -117,7 +117,7 @@ class ImageCropField extends FormField
         // find the folder of the current image
         $image = $this->data['image'];
         $parent = $image->Parent()->getFilename();
-        $folder = strpos($parent, 'Cropped') !== false ? $parent : $parent . 'Cropped/';
+        $folder = ($parent && strpos($parent, 'Cropped') !== false ? $parent : $parent . 'Cropped/');
 
 
         // create an image object
